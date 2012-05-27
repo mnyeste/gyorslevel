@@ -1,6 +1,7 @@
 package com.gyorslevel.controller;
 
 import java.util.Random;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,9 +13,9 @@ public class MailController extends MyAbstractController {
 
     @RequestMapping(method = RequestMethod.GET)
     @Override
-    public String process(ModelMap model) {
+    public String process(ModelMap model, HttpSession session) {
         addTitleToModel(model);
-        addRandomEmailToModel(model);
+        addEmailToModel(model, session);
         return getPageName();
 
     }
@@ -24,8 +25,8 @@ public class MailController extends MyAbstractController {
         return "mail";
     }
 
-    private void addRandomEmailToModel(ModelMap model) {
-        model.addAttribute("email", Long.toString(System.currentTimeMillis())+"@gyorslevel.hu");
+    private void addEmailToModel(ModelMap model, HttpSession session) {
+        model.addAttribute("email", session.getAttribute("email"));
     }
 
 }

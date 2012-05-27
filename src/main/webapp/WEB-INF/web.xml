@@ -24,5 +24,7 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+        
+        <welcome-file-list>index</welcome-file-list>
 
 </web-app>

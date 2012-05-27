@@ -1,5 +1,6 @@
 package com.gyorslevel.controller;
 
+import javax.servlet.http.HttpSession;
 import org.springframework.ui.ModelMap;
 
 abstract class MyAbstractController {
@@ -10,5 +11,5 @@ abstract class MyAbstractController {
 
     protected abstract String getPageName();
     
-    protected abstract String process(ModelMap model);
+    protected abstract String process(ModelMap model, HttpSession session);
 }

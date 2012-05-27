@@ -38,7 +38,7 @@
             </tbody>
         </table>
         
-        <a href="/gyorslevel/index">Kilépés</a>
+        <a href="/gyorslevel/logout">Kilépés</a>
         
     </body>    
 </html>
