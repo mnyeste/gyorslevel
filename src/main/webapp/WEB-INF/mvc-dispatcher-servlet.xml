@@ -19,5 +19,7 @@
             <value>.jsp</value>
         </property>
     </bean>
+    
+    <bean class="com.gyorslevel.jmx.JMXBean" name="jmxbean" />
 
 </beans>
