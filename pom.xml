@@ -73,7 +73,10 @@
 				<plugin>
 					<groupId>org.mortbay.jetty</groupId>
 					<artifactId>maven-jetty-plugin</artifactId>
-					<version>6.1.10</version>
+					<version>6.1.22</version>
+					<configuration>
+						<reload>manual</reload>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
