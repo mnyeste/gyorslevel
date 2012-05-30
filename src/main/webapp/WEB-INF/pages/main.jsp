@@ -7,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>${title}</title>
     </head>
-    <body>
+    <body>    
         <h1>Gyors levél</h1>
         <h2>${email}</h2>
         
@@ -21,24 +21,24 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="/gyorslevel/mail">Példa 1</a></td>
+                    <td><a href="${pageContext.request.contextPath}/mail">Példa 1</a></td>
                     <td>Géza</td>
                     <td>2012.05.19</td>
                 </tr>
                 <tr>
-                    <td><a href="/gyorslevel/mail">Példa 1</a></td>
+                    <td><a href="${pageContext.request.contextPath}/mail">Példa 1</a></td>
                     <td>Lajos</td>
                     <td>2012.05.21</td>
                 </tr>
                 <tr>
-                    <td><a href="/gyorslevel/mail">Példa 1</a></td>
+                    <td><a href="${pageContext.request.contextPath}/mail">Példa 1</a></td>
                     <td>Hugó</td>
                     <td>2012.06.30</td>
                 </tr>
             </tbody>
         </table>
         
-        <a href="/gyorslevel/logout">Kilépés</a>
+        <a href="${pageContext.request.contextPath}/logout">Kilépés</a>
         
     </body>    
 </html>

@@ -9,7 +9,7 @@
     </head>
     <body>
         <h1>Gyors levél</h1>
-        <form action="/gyorslevel/main">
+        <form action="${pageContext.request.contextPath}/main">
             <input type="submit" value="Új fiók" />
         </form>
     </body>    

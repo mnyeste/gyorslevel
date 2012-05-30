@@ -21,7 +21,7 @@ public class SanityCheckIT {
 
     @Test
     public void testFirst() throws Exception {
-        driver.get(baseUrl + "/gyorslevel/index");
+        driver.get(baseUrl + "/index");
         // ERROR: Caught exception [ERROR: Unsupported command [isTextPresent]]
         driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
         // ERROR: Caught exception [ERROR: Unsupported command [isTextPresent]]
