@@ -35,7 +35,19 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-mail</artifactId>
+            <version>2.1.1.RELEASE</version>
+        </dependency>
 
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.1.2</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
@@ -102,7 +114,7 @@
                     <version>6.1.26</version>
                     <configuration>
                         <reload>manual</reload>
-                      <contextPath>/</contextPath>
+                        <contextPath>/</contextPath>
                     </configuration>
                 </plugin>
                 <plugin>

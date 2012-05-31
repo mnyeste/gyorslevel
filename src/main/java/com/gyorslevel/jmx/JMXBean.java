@@ -35,7 +35,7 @@ public class JMXBean {
     }
 
     static String getDomain() {
-        return "gyorslevel.hu";
+        return "localhost";
     }
 
     public static String generateUserEmail() {
