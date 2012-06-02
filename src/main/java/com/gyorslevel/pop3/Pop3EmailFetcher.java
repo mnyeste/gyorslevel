@@ -4,6 +4,7 @@
  */
 package com.gyorslevel.pop3;
 
+import java.util.Date;
 import java.util.Properties;
 import javax.mail.*;
 
@@ -13,7 +14,7 @@ import javax.mail.*;
  */
 public class Pop3EmailFetcher {
 
-    public static String[] fetchMessages(String host, String username, String password) throws MessagingException {
+    public static SimpleMessage[] fetchMessages(String host, String username, String password) throws MessagingException {
 
         Properties props = new Properties();
 
@@ -28,10 +29,15 @@ public class Pop3EmailFetcher {
 
         Message[] messages = inbox.getMessages();
 
-        String[] subjects = new String[messages.length];
+        SimpleMessage[] subjects = new SimpleMessage[messages.length];
 
         for (int i = 0; i < messages.length; i++) {
-            subjects[i] = messages[i].getSubject();
+            final String subject = messages[i].getSubject();
+            // TODO: handle multiple 'from'
+            final String from = messages[i].getFrom()[0].toString();
+            final Date sentDate = messages[i].getSentDate();
+            final String sentDateStr = sentDate == null ? "" : sentDate.toString();
+            subjects[i] = new SimpleMessage(Integer.toString(i + 1), subject, from, sentDateStr);
         }
 
         inbox.close(false);

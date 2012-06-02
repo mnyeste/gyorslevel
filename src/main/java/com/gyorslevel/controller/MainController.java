@@ -2,10 +2,11 @@ package com.gyorslevel.controller;
 
 import com.gyorslevel.jmx.JMXBean;
 import com.gyorslevel.pop3.Pop3EmailFetcher;
+import com.gyorslevel.pop3.SimpleMessage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,11 +27,11 @@ public class MainController extends MyAbstractController {
 
     @RequestMapping(method = RequestMethod.GET)
     @Override
-    public String process(ModelMap model, HttpSession session) {
+    public String process(ModelMap model,  HttpServletRequest request) {
         addTitleToModel(model);
-        createUserIfMissing(session);
-        addUserEmailToModel(model, session);
-        addFetchedMails(model, session);
+        createUserIfMissing(request.getSession());
+        addUserEmailToModel(model, request.getSession());
+        addFetchedMails(model, request.getSession());
         return getPageName();
 
     }
@@ -58,14 +59,9 @@ public class MainController extends MyAbstractController {
 
     private void addFetchedMails(ModelMap model, HttpSession session) {
         try {
-
-            System.out.println((String) session.getAttribute("email"));
-
-            String[] messages = Pop3EmailFetcher.fetchMessages("localhost", (String) session.getAttribute("email"), "pass");
-
-            System.out.println("Messages: " + messages.length);
-
+            SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages("localhost", (String) session.getAttribute("email"), "pass");
             model.addAttribute("messages", messages);
+            session.setAttribute("messages", messages);
         } catch (MessagingException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }

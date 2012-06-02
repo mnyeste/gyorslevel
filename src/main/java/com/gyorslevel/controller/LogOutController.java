@@ -5,6 +5,7 @@
 package com.gyorslevel.controller;
 
 import com.gyorslevel.jmx.JMXBean;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,17 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LogOutController extends MyAbstractController {
 
     private JMXBean jMXBean;
-    
+
     @Autowired
     public LogOutController(JMXBean jMXBean) {
         this.jMXBean = jMXBean;
     }
-    
+
     @RequestMapping(method = RequestMethod.GET)
     @Override
-    public String process(ModelMap model, HttpSession session) {
+    public String process(ModelMap model, HttpServletRequest request) {
         addTitleToModel(model);
-        invalidateSession(session);
+        invalidateSession(request.getSession());
         return getPageName();
 
     }
@@ -38,13 +39,12 @@ public class LogOutController extends MyAbstractController {
     }
 
     private void invalidateSession(HttpSession session) {
-        
-        String email = (String)session.getAttribute("email");
-        if (email != null)
-        {
+
+        String email = (String) session.getAttribute("email");
+        if (email != null) {
             jMXBean.deleteUser(email);
         }
-        
+
         session.invalidate();
     }
 }

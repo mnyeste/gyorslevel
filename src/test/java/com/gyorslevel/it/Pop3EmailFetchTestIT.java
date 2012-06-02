@@ -6,6 +6,7 @@ package com.gyorslevel.it;
 
 import com.gyorslevel.jmx.JMXBean;
 import com.gyorslevel.pop3.Pop3EmailFetcher;
+import com.gyorslevel.pop3.SimpleMessage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Properties;
@@ -21,7 +22,7 @@ import org.junit.Test;
 /**
  * @author dave00
  */
-public class Pop3MailFetchTestIT {
+public class Pop3EmailFetchTestIT {
 
     JMXBean jMXBean;
     String userEmail;
@@ -31,21 +32,20 @@ public class Pop3MailFetchTestIT {
         jMXBean = new JMXBean();
         userEmail = JMXBean.generateUserEmail();
         jMXBean.createUser(userEmail);
-//        userEmail = "test2@localhost";
         sendTestMail();
     }
 
     @Test
     public void testFetchMail() throws MessagingException {
-        System.out.println(userEmail);
-        String[] messages = Pop3EmailFetcher.fetchMessages("localhost", userEmail, "pass");
+        SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages("localhost", userEmail, "pass");
         Assert.assertEquals(1, messages.length);
+        Assert.assertEquals("1", messages[0].getId());
     }
 
     // create user, sendmail, readmail, delete user
     @After
     public void tearDown() throws IOException {
-        // jMXBean.deleteUser(userEmail);
+        jMXBean.deleteUser(userEmail);
         jMXBean.close();
     }
 

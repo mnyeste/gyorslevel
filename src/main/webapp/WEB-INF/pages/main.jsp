@@ -25,9 +25,9 @@
 
             <c:forEach var="message" items="${messages}">
                 <tr>
-                    <td>${message}</td>
-                    <td>${message}</td>
-                    <td>${message}</td>
+                    <td>${message.subject}</td>
+                    <td>${message.from}</td>
+                    <td>${message.sentDate}</td>
                 </tr>
             </c:forEach>
 
@@ -35,7 +35,7 @@
         </tbody>
     </table>
 
-    <a href="${pageContext.request.contextPath}/logout">Kilépés</a>
+    <a href="/logout">Kilépés</a>
 
 </body>    
 </html>
