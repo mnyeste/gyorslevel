@@ -13,11 +13,35 @@
 
     <properties>
         <spring.version>3.0.5.RELEASE</spring.version>
+        <powermock.version>1.4.12</powermock.version>
     </properties>
+    
+    <repositories>
+        <repository>
+            <id>mvn-public</id>
+            <name>MVNRepository</name>
+            <url>http://mvnrepository.com</url>
+        </repository>
+    </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>${powermock.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <version>${powermock.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.8.5</version>
+        </dependency>
 
-		<!-- Spring 3 dependencies -->
+        <!-- Spring 3 dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>

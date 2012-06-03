@@ -5,13 +5,15 @@ package com.gyorslevel.pop3;
  */
 public class SimpleMessage {
 
+    private String message;
     private String subject;
     private String from;
     private String sentDate;
     private String id;
 
-    public SimpleMessage(String id, String subject, String from, String sentDate) {
+    public SimpleMessage(String id, String message, String subject, String from, String sentDate) {
         this.id = id;
+        this.message = message;
         this.subject = subject;
         this.from = from;
         this.sentDate = sentDate;
@@ -33,9 +35,13 @@ public class SimpleMessage {
         return id;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
     @Override
     public String toString() {
-        return "SimpleMessage{" + "subject=" + subject + ", from=" + from + ", sentDate=" + sentDate + ", id=" + id + '}';
+        return "SimpleMessage{" + "message=" + message + ", subject=" + subject + ", from=" + from + ", sentDate=" + sentDate + ", id=" + id + '}';
     }
 
 }

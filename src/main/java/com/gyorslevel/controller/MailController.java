@@ -31,7 +31,6 @@ public class MailController extends MyAbstractController {
     }
 
     private void addEmailMessageToModel(ModelMap model, HttpSession session, String id) {
-        System.out.println("--id:" + id);
         SimpleMessage[] messages = (SimpleMessage[]) session.getAttribute("messages");
         for (SimpleMessage simpleMessage : messages) {
             if (simpleMessage.getId().equals(id)) {

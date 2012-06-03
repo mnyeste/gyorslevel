@@ -4,6 +4,7 @@
  */
 package com.gyorslevel.pop3;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.Properties;
 import javax.mail.*;
@@ -20,30 +21,51 @@ public class Pop3EmailFetcher {
 
         String provider = "pop3";
 
-        Session session = Session.getDefaultInstance(props, null);
-        Store store = session.getStore(provider);
-        store.connect(host, username, password);
+        try {
 
-        Folder inbox = store.getFolder("INBOX");
-        inbox.open(Folder.READ_ONLY);
+            Session session = Session.getDefaultInstance(props, null);
+            Store store = session.getStore(provider);
+            store.connect(host, username, password);
 
-        Message[] messages = inbox.getMessages();
+            Folder inbox = store.getFolder("INBOX");
+            inbox.open(Folder.READ_ONLY);
 
-        SimpleMessage[] subjects = new SimpleMessage[messages.length];
+            Message[] messages = inbox.getMessages();
 
-        for (int i = 0; i < messages.length; i++) {
-            final String subject = messages[i].getSubject();
-            // TODO: handle multiple 'from'
-            final String from = messages[i].getFrom()[0].toString();
-            final Date sentDate = messages[i].getSentDate();
-            final String sentDateStr = sentDate == null ? "" : sentDate.toString();
-            subjects[i] = new SimpleMessage(Integer.toString(i + 1), subject, from, sentDateStr);
+            SimpleMessage[] subjects = new SimpleMessage[messages.length];
+
+            for (int i = 0; i < messages.length; i++) {
+                final String subject = messages[i].getSubject();
+                // TODO: handle multiple 'from'
+                final String from = messages[i].getFrom()[0].toString();
+                final Date sentDate = messages[i].getSentDate();
+                final String sentDateStr = sentDate == null ? "" : sentDate.toString();
+                final String content = getContent(messages[i]);
+                subjects[i] = new SimpleMessage(Integer.toString(i + 1), content, subject, from, sentDateStr);
+            }
+
+            inbox.close(false);
+            store.close();
+
+            return subjects;
+
+        } catch (MessagingException exception) {
+            System.err.println(exception);
+            throw new RuntimeException(exception);
+        } catch (IOException exception) {
+            System.err.println(exception);
+            throw new RuntimeException(exception);
         }
 
-        inbox.close(false);
-        store.close();
+    }
 
-        return subjects;
+    static String getContent(Message message) throws MessagingException, IOException {
+
+        if (message.isMimeType("text/plain")) {
+            return (String) message.getContent();
+        } else {
+            throw new UnsupportedOperationException("Not yet implemented");
+        }
 
     }
 }

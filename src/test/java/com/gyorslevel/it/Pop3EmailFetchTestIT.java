@@ -40,6 +40,7 @@ public class Pop3EmailFetchTestIT {
         SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages("localhost", userEmail, "pass");
         Assert.assertEquals(1, messages.length);
         Assert.assertEquals("1", messages[0].getId());
+        // TODO: Assert.assertEquals("hiiiiii!!", messages[0].getMessage());
     }
 
     // create user, sendmail, readmail, delete user

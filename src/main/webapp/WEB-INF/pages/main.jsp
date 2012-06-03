@@ -13,29 +13,39 @@
         <h1>Gyors levél</h1>
         <h2>${email}</h2>
 
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Tárgy</th>
-                    <th>Feladó</th>
-                    <th>Dátum</th>
-                </tr>
-            </thead>
-            <tbody>
+        <p>
+    <c:choose>
+        <c:when test="${empty messages}">
+            <c:out value="Nincs olvasatlan levél" />
+        </c:when>
+        <c:otherwise>
 
-            <c:forEach var="message" items="${messages}">
-                <tr>
-                    <td>${message.subject}</td>
-                    <td>${message.from}</td>
-                    <td>${message.sentDate}</td>
-                </tr>
-            </c:forEach>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Tárgy</th>
+                        <th>Feladó</th>
+                        <th>Dátum</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-            
-        </tbody>
-    </table>
+                <c:forEach var="message" items="${messages}">
+                    <tr>
+                        <td><a href="/mail?id=${message.id}">${message.subject}</a></td>
+                        <td>${message.from}</td>
+                        <td>${message.sentDate}</td>
+                    </tr>
+                </c:forEach>
 
-    <a href="/logout">Kilépés</a>
+                </tbody>
+            </table>
+
+        </c:otherwise>
+    </c:choose>
+</p>
+
+<a href="/logout">Kilépés</a>
 
 </body>    
 </html>
