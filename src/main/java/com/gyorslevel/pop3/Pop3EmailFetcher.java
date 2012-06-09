@@ -61,7 +61,7 @@ public class Pop3EmailFetcher {
 
     static String getContent(Message message) throws MessagingException, IOException {
 
-        if (message.isMimeType("text/plain")) {
+        if (message.isMimeType("text/plain") || message.isMimeType("text/html")) {
             return (String) message.getContent();
         } else {
             throw new UnsupportedOperationException("Not yet implemented");
