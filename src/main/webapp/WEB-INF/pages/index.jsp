@@ -8,7 +8,8 @@
         <title>${title}</title>
     </head>
     <body>
-        <h1>Gyors levél</h1>
+        <img src="../../images/logo_small.png" />
+        
         <form action="/main">
             <input type="submit" value="Új fiók" />
         </form>

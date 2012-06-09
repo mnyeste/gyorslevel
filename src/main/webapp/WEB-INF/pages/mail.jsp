@@ -8,7 +8,7 @@
         <title>${title}</title>
     </head>
     <body>
-        <h1>Gyors levél</h1>
+        <img src="../../images/logo_small.png" />
         <h2>${email}</h2>
 
         <h3><b>Tárgy: </b></h3>${openedMessage.subject}
