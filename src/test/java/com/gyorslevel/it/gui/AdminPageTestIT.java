@@ -50,8 +50,8 @@ public class AdminPageTestIT extends AbstractGUITestIT {
     @Test
     public void testListUsers() {
 
-        WebElement table_element = driver.findElement(By.id("testTable"));
-        List<WebElement> tr_collection = table_element.findElements(By.xpath("id('testTable')/tbody/tr"));
+        WebElement table_element = driver.findElement(By.id("useremailstable"));
+        List<WebElement> tr_collection = table_element.findElements(By.xpath("id('useremailstable')/tbody/tr"));
 
         System.out.println("NUMBER OF ROWS IN THIS TABLE = " + tr_collection.size());
 
