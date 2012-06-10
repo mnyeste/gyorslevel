@@ -1,9 +1,7 @@
 package com.gyorslevel.controller;
 
-import com.gyorslevel.jmx.JMXBean;
+import com.gyorslevel.timer.UserExpireController;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping({"/admin", "/"})
+@RequestMapping({"/admin"})
 public class AdminController extends MyAbstractController {
 
-    private JMXBean jMXBean;
+    private UserExpireController expireController;
 
     @Autowired
-    public AdminController(JMXBean jMXBean) {
-        this.jMXBean = jMXBean;
+    public AdminController(UserExpireController expireController) {
+        this.expireController = expireController;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -36,6 +34,6 @@ public class AdminController extends MyAbstractController {
     }
 
     private void addUserEmailsToModel(ModelMap model) {
-        model.addAttribute("userEmails", jMXBean.listAllUsers());
+        model.addAttribute("userEmails", expireController.listAllUsers());
     }
 }

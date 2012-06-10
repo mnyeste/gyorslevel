@@ -5,6 +5,7 @@
 package com.gyorslevel.it.gui;
 
 import com.gyorslevel.jmx.JMXBean;
+import com.gyorslevel.timer.UserExpireController;
 import java.util.List;
 import junit.framework.Assert;
 import org.junit.*;
@@ -17,17 +18,17 @@ import org.openqa.selenium.WebElement;
 public class AdminPageTestIT extends AbstractGUITestIT {
 
     private static String userEmail;
-    private static JMXBean jMXBean;
+    private static UserExpireController expireController;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
 
         AbstractGUITestIT.setUpClass();
 
-        userEmail = JMXBean.generateUserEmail();
 
-        jMXBean = new JMXBean();
-        jMXBean.createUser(userEmail);
+        JMXBean jMXBean = new JMXBean();
+        expireController = new UserExpireController(jMXBean);
+        userEmail = expireController.createUser();
 
     }
 
@@ -35,9 +36,7 @@ public class AdminPageTestIT extends AbstractGUITestIT {
     public static void tearDown() throws Exception {
 
         AbstractGUITestIT.tearDownClass();
-
-        jMXBean.deleteUser(userEmail);
-        jMXBean.close();
+        expireController.deleteUser(userEmail);
 
     }
 
@@ -50,10 +49,10 @@ public class AdminPageTestIT extends AbstractGUITestIT {
     @Test
     public void testListUsers() {
 
-        WebElement table_element = driver.findElement(By.id("useremailstable"));
-        List<WebElement> tr_collection = table_element.findElements(By.xpath("id('useremailstable')/tbody/tr"));
-
-        System.out.println("NUMBER OF ROWS IN THIS TABLE = " + tr_collection.size());
+        List<WebElement> jamesUsers = getTableElement("useremailstable");
+        Assert.assertNotNull(jamesUsers);
+        
+        // System.out.println("NUMBER OF ROWS IN THIS TABLE = " + tr_collection.size());
 
         /*
          * int row_num, col_num; row_num = 1; for (WebElement trElement :
@@ -65,5 +64,11 @@ public class AdminPageTestIT extends AbstractGUITestIT {
          * row_num++; }
          */
 
+    }
+
+    private List<WebElement> getTableElement(String tableName) {
+        WebElement table_element = driver.findElement(By.id(tableName));
+        List<WebElement> tr_collection = table_element.findElements(By.xpath("id('" + tableName + "')/tbody/tr"));
+        return tr_collection;
     }
 }

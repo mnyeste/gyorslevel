@@ -7,6 +7,7 @@ package com.gyorslevel.it;
 import com.gyorslevel.jmx.JMXBean;
 import com.gyorslevel.pop3.Pop3EmailFetcher;
 import com.gyorslevel.pop3.SimpleMessage;
+import com.gyorslevel.timer.UserExpireController;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Properties;
@@ -24,15 +25,18 @@ import org.junit.Test;
  */
 public class Pop3EmailFetchTestIT {
 
-    JMXBean jMXBean;
+    UserExpireController expireController;
     String userEmail;
 
     @Before
     public void setup() throws MalformedURLException, IOException, MalformedObjectNameException, InterruptedException {
-        jMXBean = new JMXBean();
-        userEmail = JMXBean.generateUserEmail();
-        jMXBean.createUser(userEmail);
+        
+        JMXBean jMXBean = new JMXBean();
+        expireController = new UserExpireController(jMXBean);
+        userEmail = expireController.createUser();
+        
         sendTestMail();
+        
     }
 
     @Test
@@ -46,8 +50,7 @@ public class Pop3EmailFetchTestIT {
     // create user, sendmail, readmail, delete user
     @After
     public void tearDown() throws IOException {
-        jMXBean.deleteUser(userEmail);
-        jMXBean.close();
+        expireController.deleteUser(userEmail);
     }
 
     void sendTestMail() throws InterruptedException {

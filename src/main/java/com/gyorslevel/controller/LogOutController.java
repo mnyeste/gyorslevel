@@ -4,7 +4,7 @@
  */
 package com.gyorslevel.controller;
 
-import com.gyorslevel.jmx.JMXBean;
+import com.gyorslevel.timer.UserExpireController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/logout")
 public class LogOutController extends MyAbstractController {
 
-    private JMXBean jMXBean;
+    private UserExpireController expireController;
 
     @Autowired
-    public LogOutController(JMXBean jMXBean) {
-        this.jMXBean = jMXBean;
+    public LogOutController(UserExpireController expireController) {
+        this.expireController = expireController;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -42,7 +42,7 @@ public class LogOutController extends MyAbstractController {
 
         String email = (String) session.getAttribute("email");
         if (email != null) {
-            jMXBean.deleteUser(email);
+            expireController.deleteUser(email);
         }
 
         session.invalidate();

@@ -3,7 +3,6 @@ package com.gyorslevel.it;
 import com.gyorslevel.jmx.JMXBean;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.Arrays;
 import java.util.List;
 import javax.management.MalformedObjectNameException;
 import junit.framework.Assert;

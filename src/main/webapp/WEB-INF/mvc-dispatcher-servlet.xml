@@ -21,5 +21,7 @@
     </bean>
     
     <bean class="com.gyorslevel.jmx.JMXBean" name="jmxbean" />
+    
+    <bean class="com.gyorslevel.timer.UserExpireController" name="expController" />
 
 </beans>

@@ -3,6 +3,7 @@ package com.gyorslevel.controller;
 import com.gyorslevel.jmx.JMXBean;
 import com.gyorslevel.pop3.Pop3EmailFetcher;
 import com.gyorslevel.pop3.SimpleMessage;
+import com.gyorslevel.timer.UserExpireController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
@@ -18,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/main")
 public class MainController extends MyAbstractController {
 
-    private JMXBean jMXBean;
+    private UserExpireController expireController;
 
     @Autowired
-    public MainController(JMXBean jMXBean) {
-        this.jMXBean = jMXBean;
+    public MainController(UserExpireController expireController) {
+        this.expireController = expireController;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -50,8 +51,7 @@ public class MainController extends MyAbstractController {
         String attribute = (String) session.getAttribute("email");
 
         if (attribute == null) {
-            String email = JMXBean.generateUserEmail();
-            jMXBean.createUser(email);
+            String email = expireController.createUser();
             session.setAttribute("email", email);
         }
 
