@@ -175,7 +175,7 @@
                         <artifactId>maven-jetty-plugin</artifactId>
                         <configuration>
                             <stopKey>stop</stopKey>
-                            <stopPort>9999</stopPort>
+                            <stopPort>7777</stopPort>
                         </configuration>
                         <executions>
                             <execution>
