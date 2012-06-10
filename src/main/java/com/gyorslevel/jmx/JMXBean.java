@@ -2,6 +2,8 @@ package com.gyorslevel.jmx;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import javax.management.JMX;
 import javax.management.MBeanServerConnection;
@@ -65,8 +67,15 @@ public class JMXBean {
             throw new RuntimeException(exception);
         }
     }
-
-    public UsersRepositoryManagementMBean getMbeanProxy() {
-        return mbeanProxy;
+    
+    public List<String> listAllUsers()
+    {
+        try {
+            return Arrays.asList(mbeanProxy.listAllUsers());
+        } catch (Exception exception) {
+            System.err.println(exception);
+            throw new RuntimeException(exception);
+        }
     }
+
 }

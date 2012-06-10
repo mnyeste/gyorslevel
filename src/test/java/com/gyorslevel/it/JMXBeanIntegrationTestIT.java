@@ -27,7 +27,7 @@ public class JMXBeanIntegrationTestIT {
         final String userEmail = JMXBean.generateUserEmail();
         jMXBean.createUser(userEmail);
         
-        List<String> asList = Arrays.asList(jMXBean.getMbeanProxy().listAllUsers());
+        List<String> asList = jMXBean.listAllUsers();
         Assert.assertTrue(asList.contains(userEmail));
         
         jMXBean.deleteUser(userEmail);
