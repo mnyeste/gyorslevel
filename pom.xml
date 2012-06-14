@@ -219,4 +219,14 @@
 
     </profiles>
 
+       <distributionManagement>
+               <repository>
+                       <id>dropbox</id>
+                       <url>${dropbox.local.dir}</url>
+               </repository>
+               <snapshotRepository>
+                       <id>dropbox</id>
+                       <url>${dropbox.local.dir}</url>
+               </snapshotRepository>
+       </distributionManagement>
 </project>
