@@ -4,6 +4,7 @@
  */
 package com.gyorslevel.it.gui;
 
+import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.jmx.JMXBean;
 import com.gyorslevel.timer.UserExpireController;
 import java.util.List;
@@ -28,7 +29,8 @@ public class AdminPageTestIT extends AbstractGUITestIT {
 
         JMXBean jMXBean = new JMXBean();
         expireController = new UserExpireController(jMXBean);
-        userEmail = expireController.createUser();
+        UserExpiration expiration = expireController.createUser();
+        userEmail = expiration.getUserEmail();
 
     }
 
@@ -36,7 +38,7 @@ public class AdminPageTestIT extends AbstractGUITestIT {
     public static void tearDown() throws Exception {
 
         AbstractGUITestIT.tearDownClass();
-        expireController.deleteUser(userEmail);
+        expireController.deleteUser(new UserExpiration(userEmail));
 
     }
 

@@ -1,6 +1,6 @@
 package com.gyorslevel.controller;
 
-import com.gyorslevel.jmx.JMXBean;
+import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.pop3.Pop3EmailFetcher;
 import com.gyorslevel.pop3.SimpleMessage;
 import com.gyorslevel.timer.UserExpireController;
@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+// TODO: add expiration to model instead of email
 @Controller
 @RequestMapping("/main")
 public class MainController extends MyAbstractController {
@@ -28,7 +29,7 @@ public class MainController extends MyAbstractController {
 
     @RequestMapping(method = RequestMethod.GET)
     @Override
-    public String process(ModelMap model,  HttpServletRequest request) {
+    public String process(ModelMap model, HttpServletRequest request) {
         addTitleToModel(model);
         createUserIfMissing(request.getSession());
         addUserEmailToModel(model, request.getSession());
@@ -42,24 +43,27 @@ public class MainController extends MyAbstractController {
         return "main";
     }
 
+    // TODO: move to upper class
     private void addUserEmailToModel(ModelMap model, HttpSession session) {
-        model.addAttribute("email", session.getAttribute("email"));
+        UserExpiration expiration = (UserExpiration) session.getAttribute("expiration");
+        model.addAttribute("email", expiration.getUserEmail());
     }
 
     private void createUserIfMissing(HttpSession session) {
 
-        String attribute = (String) session.getAttribute("email");
+        UserExpiration expiration = (UserExpiration) session.getAttribute("expiration");
 
-        if (attribute == null) {
-            String email = expireController.createUser();
-            session.setAttribute("email", email);
+        if (expiration == null) {
+            expiration = expireController.createUser();
+            session.setAttribute("expiration", expiration);
         }
 
     }
 
     private void addFetchedMails(ModelMap model, HttpSession session) {
         try {
-            SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages("localhost", (String) session.getAttribute("email"), "pass");
+            UserExpiration expiration = (UserExpiration) session.getAttribute("expiration");
+            SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages("localhost", expiration.getUserEmail(), "pass");
             model.addAttribute("messages", messages);
             session.setAttribute("messages", messages);
         } catch (MessagingException ex) {

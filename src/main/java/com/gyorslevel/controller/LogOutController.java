@@ -4,6 +4,7 @@
  */
 package com.gyorslevel.controller;
 
+import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.timer.UserExpireController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,9 +41,9 @@ public class LogOutController extends MyAbstractController {
 
     private void invalidateSession(HttpSession session) {
 
-        String email = (String) session.getAttribute("email");
-        if (email != null) {
-            expireController.deleteUser(email);
+        UserExpiration expiration = (UserExpiration) session.getAttribute("expiration");
+        if (expiration != null) {
+            expireController.deleteUser(expiration);
         }
 
         session.invalidate();

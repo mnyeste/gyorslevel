@@ -4,6 +4,7 @@
  */
 package com.gyorslevel.it.gui;
 
+import junit.framework.Assert;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,6 +30,7 @@ public class LoginTestIT extends AbstractGUITestIT {
     public void testLogin() throws Exception {
         openUrl("index");
         driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+        Assert.assertEquals("Levelek", driver.findElement(By.cssSelector(".pageName")).getText());
     }
           
 }

@@ -1,8 +1,10 @@
 package com.gyorslevel.controller;
 
+import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.pop3.SimpleMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.omg.CORBA.UserException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,8 @@ public class MailController extends MyAbstractController {
     }
 
     private void addUserEmailToModel(ModelMap model, HttpSession session) {
-        model.addAttribute("email", session.getAttribute("email"));
+        UserExpiration expiration = (UserExpiration) session.getAttribute("expiration");
+        model.addAttribute("email", expiration.getUserEmail());
     }
 
     private void addEmailMessageToModel(ModelMap model, HttpSession session, String id) {

@@ -1,18 +1,21 @@
 package com.gyorslevel.timer;
 
+import com.gyorslevel.expiration.UserExpiration;
+import com.gyorslevel.expiration.UserExpirationCreatedTimeFactory;
 import com.gyorslevel.jmx.JMXBean;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TimerTask;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
+ * TODO: use List instead of list TODO: create class to represent user expiry
+ *
  * @author dave00
  */
 public class UserExpireController extends TimerTask {
-    
+
     private final JMXBean jmxBean;
-    private List<String> userEmails = new ArrayList<String>();
+    private List<UserExpiration> expirations = new ArrayList<UserExpiration>();
+    private UserExpirationCreatedTimeFactory expirationCreatedTimeFactory = new UserExpirationCreatedTimeFactory();
 
     @Autowired
     public UserExpireController(JMXBean jmxBean) {
@@ -28,20 +31,30 @@ public class UserExpireController extends TimerTask {
         return jmxBean.listAllUsers();
     }
 
-    public void deleteUser(String email) {
-        jmxBean.deleteUser(email);
-        userEmails.remove(email);
+    public void deleteUser(UserExpiration expiration) {
+        jmxBean.deleteUser(expiration.getUserEmail());
+        expirations.remove(expiration);
     }
 
-    public String createUser() {
+    public UserExpiration createUser() {
         String email = JMXBean.generateUserEmail();
         jmxBean.createUser(email);
-        userEmails.add(email);
-        return email;
+        UserExpiration expiration = new UserExpiration(email, expirationCreatedTimeFactory.getCreatedTime());
+        expirations.add(expiration);
+        return expiration;
     }
 
-    boolean userExists(String userEmail) {
-        return userEmails.contains(userEmail);
+    boolean userExists(String email) {
+        return expirations.contains(new UserExpiration(email));
     }
-    
+
+    /**
+     * @post: n.getCreatedTime() <= n.getCreatedTime()
+     *
+     * @return
+     */
+    public List<UserExpiration> getExpirations() {
+        Collections.sort(expirations);
+        return expirations;
+    }
 }

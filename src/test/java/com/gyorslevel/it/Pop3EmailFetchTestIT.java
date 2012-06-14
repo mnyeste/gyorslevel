@@ -4,6 +4,7 @@
  */
 package com.gyorslevel.it;
 
+import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.jmx.JMXBean;
 import com.gyorslevel.pop3.Pop3EmailFetcher;
 import com.gyorslevel.pop3.SimpleMessage;
@@ -33,7 +34,8 @@ public class Pop3EmailFetchTestIT {
         
         JMXBean jMXBean = new JMXBean();
         expireController = new UserExpireController(jMXBean);
-        userEmail = expireController.createUser();
+        UserExpiration expiration = expireController.createUser();
+        userEmail = expiration.getUserEmail();
         
         sendTestMail();
         
@@ -50,7 +52,7 @@ public class Pop3EmailFetchTestIT {
     // create user, sendmail, readmail, delete user
     @After
     public void tearDown() throws IOException {
-        expireController.deleteUser(userEmail);
+        expireController.deleteUser(new UserExpiration(userEmail));
     }
 
     void sendTestMail() throws InterruptedException {
