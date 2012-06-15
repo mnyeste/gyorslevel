@@ -26,7 +26,7 @@ public class JMXBean {
 
     public JMXBean() throws MalformedURLException, IOException, MalformedObjectNameException {
         JMXServiceURL url = new JMXServiceURL(
-                "service:jmx:rmi:///jndi/rmi://:9999/jmxrmi");
+                "service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi");
         jmxc = JMXConnectorFactory.connect(url, null);
 
         MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
