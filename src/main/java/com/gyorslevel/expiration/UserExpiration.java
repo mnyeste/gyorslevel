@@ -57,7 +57,6 @@ public class UserExpiration implements Comparable<UserExpiration> {
 
     @Override
     public int compareTo(UserExpiration o) {
-        return Long.compare(createdTime, o.createdTime);
-    }
-    
+    	return Long.valueOf(createdTime).compareTo(Long.valueOf(o.createdTime));
+	}
 }
