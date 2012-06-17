@@ -13,7 +13,7 @@
     <body>    
         <img src="../../images/logo_small.png" />
         <h2 class="pageName">Levelek</h2>
-        <h2>${email}</h2>
+        <h2>${expiration.userEmail}</h2>
 
         <p>
     <c:choose>

@@ -1,7 +1,6 @@
 package com.gyorslevel.controller;
 
 import com.gyorslevel.timer.UserExpireController;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,8 +19,7 @@ public class AdminController extends MyAbstractController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    @Override
-    public String process(ModelMap model, HttpServletRequest request) {
+    public String process(ModelMap model) {
         addTitleToModel(model);
         addUserEmailsToModel(model);
         return getPageName();

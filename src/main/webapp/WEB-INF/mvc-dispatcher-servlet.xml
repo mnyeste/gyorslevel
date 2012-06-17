@@ -23,5 +23,31 @@
     <bean class="com.gyorslevel.jmx.JMXBean" name="jmxbean" />
     
     <bean class="com.gyorslevel.timer.UserExpireController" name="expController" />
+    
+    <bean name="expirationJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="com.gyorslevel.timer.UserExpireTimer" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="controller" value-ref="expController" />
+            </map>
+        </property>
+    </bean>
+    
+     <!-- Associate the Job Bean with a Trigger. Triggers define when a job is executed. -->
+    <bean id="expirationTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+        <!-- see the example of method invoking job above -->
+        <property name="jobDetail" ref="expirationJob"/>
+        <property name="startDelay" value="5000"/>
+        <property name="repeatInterval" value="5000"/>
+    </bean>
+    
+    <!-- A list of Triggers to be scheduled and executed by Quartz -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="expirationTrigger"/>
+            </list>
+        </property>
+    </bean>
 
 </beans>

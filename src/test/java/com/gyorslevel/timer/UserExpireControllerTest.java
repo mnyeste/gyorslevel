@@ -5,6 +5,8 @@ import com.gyorslevel.expiration.UserExpirationCreatedTimeFactory;
 import com.gyorslevel.jmx.JMXBean;
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -35,7 +37,6 @@ public class UserExpireControllerTest {
 
         Whitebox.setInternalState(controller, "expirationCreatedTimeFactory", factory);
 
-        // TODO: rename createUserExpiration()
         expiration = controller.createUser();
     }
 
@@ -56,6 +57,14 @@ public class UserExpireControllerTest {
         Assert.assertEquals(expiration.getCreatedTime(), 1234L);
 
         controller.deleteUser(expiration);
+    }
+
+    @Test
+    public void testDeletedUserDoesNotExist() {
+
+        controller.deleteUser(expiration);
+        Assert.assertFalse(controller.userExists(expiration.getUserEmail()));
+
     }
 
     @Test
@@ -84,26 +93,50 @@ public class UserExpireControllerTest {
     }
 
     @Test
-    public void testDeletedUserDoesNotExist() {
+    public void testUserShouldBeDeletedBecauseExpired() {
 
-        controller.deleteUser(expiration);
-        Assert.assertFalse(controller.userExists(expiration.getUserEmail()));
+        doReturn(System.currentTimeMillis() - 1 - UserExpireController.TIME_OUT).when(factory).getCreatedTime();
+        UserExpiration expiration = controller.createUser();
+
+        Assert.assertTrue(controller.userExpired(expiration));
+
+    }
+    
+    @Test
+    public void testUserShouldNotBeDeleted() {
+
+        doReturn(System.currentTimeMillis() + 1 - UserExpireController.TIME_OUT).when(factory).getCreatedTime();
+        UserExpiration expiration = controller.createUser();
+
+        Assert.assertFalse(controller.userExpired(expiration));
 
     }
 
-    // TODO
-    @Ignore
     @Test
-    public void testTimer() {
+    public void testTimer() throws InterruptedException {
 
-        Timer myTimer = new Timer();
-        myTimer.schedule(controller, 0);
+        Timer controllerTimer = new Timer();
+        
+        // Create user
+        doReturn(System.currentTimeMillis()).when(factory).getCreatedTime();
+        UserExpiration expiration = controller.createUser();
+        
+        // Expect it exists
+        Assert.assertTrue(controller.userExists(expiration.getUserEmail()));
+        
+        // Start timer
+        controllerTimer.schedule(new TimerTask(){
+            @Override
+            public void run() {
+                controller.expireUsers();
+            }
+        }, 0, 5);
 
-        // TODO: create user with 2 second expiry
-        // TODO: check after 1 second: user should still exist
-        // TODO: check after 2 second: user should be gone
-
-        verify(controller, times(1)).listAllUsers();
+        // Wait
+        Thread.sleep(TimeUnit.MILLISECONDS.convert(15, TimeUnit.SECONDS));
+        
+        // Expect deleted
+        Assert.assertFalse(controller.userExists(expiration.getUserEmail()));
 
     }
 }

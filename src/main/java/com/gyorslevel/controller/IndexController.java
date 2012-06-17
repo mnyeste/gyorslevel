@@ -1,6 +1,5 @@
 package com.gyorslevel.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class IndexController extends MyAbstractController {
 
     @RequestMapping(method = RequestMethod.GET)
-    @Override
-    public String process(ModelMap model, HttpServletRequest request) {
+    public String process(ModelMap model) {
         addTitleToModel(model);
         return getPageName();
 
