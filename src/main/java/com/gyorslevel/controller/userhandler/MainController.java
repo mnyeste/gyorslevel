@@ -28,7 +28,7 @@ public class MainController extends UserHandlerController {
         
         if (userSessionExpired(session))
         {
-            return "expired";
+            return "redirect:expired";
         }
         
         addTitleToModel(model);
