@@ -16,7 +16,7 @@ public class UserExpireController {
     private List<UserExpiration> expirations = new ArrayList<UserExpiration>();
     private UserExpirationCreatedTimeFactory expirationCreatedTimeFactory = new UserExpirationCreatedTimeFactory();
     // TODO: retrieve from config class with Commons Config >> mock for president. This we will be able to mock in very small delays
-    public static final long TIME_OUT = TimeUnit.MILLISECONDS.convert(10, TimeUnit.SECONDS);
+    public static final long TIME_OUT = TimeUnit.MILLISECONDS.convert(30, TimeUnit.SECONDS);
 
     @Autowired
     public UserExpireController(JMXBean jmxBean) {

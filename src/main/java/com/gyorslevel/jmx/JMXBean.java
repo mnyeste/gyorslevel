@@ -1,17 +1,8 @@
 package com.gyorslevel.jmx;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import javax.management.JMX;
-import javax.management.MBeanServerConnection;
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
-import javax.management.remote.JMXConnector;
-import javax.management.remote.JMXConnectorFactory;
-import javax.management.remote.JMXServiceURL;
 import org.apache.james.user.api.UsersRepositoryManagementMBean;
 
 /**
@@ -21,20 +12,7 @@ import org.apache.james.user.api.UsersRepositoryManagementMBean;
  */
 public class JMXBean {
 
-    private UsersRepositoryManagementMBean mbeanProxy;
-    private JMXConnector jmxc;
-
-    public JMXBean() throws MalformedURLException, IOException, MalformedObjectNameException {
-        JMXServiceURL url = new JMXServiceURL(
-                "service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi");
-        jmxc = JMXConnectorFactory.connect(url, null);
-
-        MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
-
-        ObjectName mbeanName = new ObjectName("org.apache.james:type=component,name=usersrepository");
-
-        mbeanProxy = JMX.newMBeanProxy(mbsc, mbeanName, org.apache.james.user.api.UsersRepositoryManagementMBean.class, true);
-    }
+    UsersRepositoryManagementMBean mbeanProxy;
 
     static String getDomain() {
         return "localhost";
@@ -44,10 +22,6 @@ public class JMXBean {
         UUID uuid = UUID.randomUUID();
         String email = uuid.toString().replaceAll("-", "");
         return String.format("%s@%s", email, getDomain());
-    }
-
-    public void close() throws IOException {
-        jmxc.close();
     }
 
     public void createUser(String email) {
@@ -67,9 +41,8 @@ public class JMXBean {
             throw new RuntimeException(exception);
         }
     }
-    
-    public List<String> listAllUsers()
-    {
+
+    public List<String> listAllUsers() {
         try {
             return Arrays.asList(mbeanProxy.listAllUsers());
         } catch (Exception exception) {
@@ -77,5 +50,4 @@ public class JMXBean {
             throw new RuntimeException(exception);
         }
     }
-
 }

@@ -9,7 +9,6 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import junit.framework.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -101,7 +100,7 @@ public class UserExpireControllerTest {
         Assert.assertTrue(controller.userExpired(expiration));
 
     }
-    
+
     @Test
     public void testUserShouldNotBeDeleted() {
 
@@ -116,16 +115,17 @@ public class UserExpireControllerTest {
     public void testTimer() throws InterruptedException {
 
         Timer controllerTimer = new Timer();
-        
+
         // Create user
         doReturn(System.currentTimeMillis()).when(factory).getCreatedTime();
         UserExpiration expiration = controller.createUser();
-        
+
         // Expect it exists
         Assert.assertTrue(controller.userExists(expiration.getUserEmail()));
-        
+
         // Start timer
-        controllerTimer.schedule(new TimerTask(){
+        controllerTimer.schedule(new TimerTask() {
+
             @Override
             public void run() {
                 controller.expireUsers();
@@ -133,8 +133,8 @@ public class UserExpireControllerTest {
         }, 0, 5);
 
         // Wait
-        Thread.sleep(TimeUnit.MILLISECONDS.convert(15, TimeUnit.SECONDS));
-        
+        Thread.sleep(TimeUnit.MILLISECONDS.convert((UserExpireController.TIME_OUT/1000) + 5, TimeUnit.SECONDS));
+
         // Expect deleted
         Assert.assertFalse(controller.userExists(expiration.getUserEmail()));
 

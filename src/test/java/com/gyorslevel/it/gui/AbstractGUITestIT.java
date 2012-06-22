@@ -1,5 +1,6 @@
 package com.gyorslevel.it.gui;
 
+import com.gyorslevel.it.BaseITTest;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import org.junit.AfterClass;
@@ -14,7 +15,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  *
  * @author dave00
  */
-public class AbstractGUITestIT {
+public class AbstractGUITestIT extends BaseITTest {
 
     protected static WebDriver driver;
     protected static String baseUrl;

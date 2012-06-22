@@ -5,48 +5,36 @@
 package com.gyorslevel.it;
 
 import com.gyorslevel.expiration.UserExpiration;
-import com.gyorslevel.jmx.JMXBean;
 import com.gyorslevel.pop3.Pop3EmailFetcher;
 import com.gyorslevel.pop3.SimpleMessage;
-import com.gyorslevel.timer.UserExpireController;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.management.MalformedObjectNameException;
 import junit.framework.Assert;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author dave00
  */
-public class Pop3EmailFetchTestIT {
+public class Pop3EmailFetchTestIT extends BaseITTest {
 
-    UserExpireController expireController;
     String userEmail;
 
-    @Before
-    public void setup() throws MalformedURLException, IOException, MalformedObjectNameException, InterruptedException {
+    @TestResource(resourceTypes=ResourceType.UserExpireController)
+    @Test
+    public void testFetchMail() throws MessagingException, InterruptedException {
         
-        JMXBean jMXBean = new JMXBean();
-        expireController = new UserExpireController(jMXBean);
         UserExpiration expiration = expireController.createUser();
         userEmail = expiration.getUserEmail();
         
         sendTestMail();
         
-    }
-
-    @Test
-    public void testFetchMail() throws MessagingException {
         SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages("localhost", userEmail, "pass");
         Assert.assertEquals(1, messages.length);
         Assert.assertEquals("1", messages[0].getId());
-        // TODO: Assert.assertEquals("hiiiiii!!", messages[0].getMessage());
     }
 
     // create user, sendmail, readmail, delete user

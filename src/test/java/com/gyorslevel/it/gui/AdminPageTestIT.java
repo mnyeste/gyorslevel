@@ -5,8 +5,7 @@
 package com.gyorslevel.it.gui;
 
 import com.gyorslevel.expiration.UserExpiration;
-import com.gyorslevel.jmx.JMXBean;
-import com.gyorslevel.timer.UserExpireController;
+import com.gyorslevel.it.ResourceType;
 import java.util.List;
 import junit.framework.Assert;
 import org.junit.*;
@@ -19,19 +18,19 @@ import org.openqa.selenium.WebElement;
 public class AdminPageTestIT extends AbstractGUITestIT {
 
     private static String userEmail;
-    private static UserExpireController expireController;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-
         AbstractGUITestIT.setUpClass();
-
-
-        JMXBean jMXBean = new JMXBean();
-        expireController = new UserExpireController(jMXBean);
+    }
+    
+    @Before
+    public void setUp()
+    {
+        injectResources(new ResourceType[]{ResourceType.UserExpireController});
+        
         UserExpiration expiration = expireController.createUser();
         userEmail = expiration.getUserEmail();
-
     }
 
     @AfterClass
@@ -53,19 +52,6 @@ public class AdminPageTestIT extends AbstractGUITestIT {
 
         List<WebElement> jamesUsers = getTableElement("useremailstable");
         Assert.assertNotNull(jamesUsers);
-        
-        // System.out.println("NUMBER OF ROWS IN THIS TABLE = " + tr_collection.size());
-
-        /*
-         * int row_num, col_num; row_num = 1; for (WebElement trElement :
-         * tr_collection) { List<WebElement> td_collection =
-         * trElement.findElements(By.xpath("td")); System.out.println("NUMBER OF
-         * COLUMNS=" + td_collection.size()); col_num = 1; for (WebElement
-         * tdElement : td_collection) { System.out.println("row # " + row_num +
-         * ", col # " + col_num + "text=" + tdElement.getText()); col_num++; }
-         * row_num++; }
-         */
-
     }
 
     private List<WebElement> getTableElement(String tableName) {
