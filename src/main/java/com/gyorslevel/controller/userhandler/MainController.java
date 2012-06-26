@@ -1,5 +1,6 @@
 package com.gyorslevel.controller.userhandler;
 
+import com.gyorslevel.configuration.ConfigurationBean;
 import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.pop3.Pop3EmailFetcher;
 import com.gyorslevel.pop3.SimpleMessage;
@@ -58,7 +59,8 @@ public class MainController extends UserHandlerController {
     private void addFetchedMails(ModelMap model, HttpSession session) {
         try {
             UserExpiration expiration = (UserExpiration) session.getAttribute("expiration");
-            SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages("localhost", expiration.getUserEmail(), "pass");
+            String domain = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.Domain, String.class);
+            SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages(domain, expiration.getUserEmail(), "pass");
             model.addAttribute("messages", messages);
             session.setAttribute("messages", messages);
         } catch (MessagingException ex) {

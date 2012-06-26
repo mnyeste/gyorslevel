@@ -1,5 +1,6 @@
 package com.gyorslevel.timer;
 
+import com.gyorslevel.configuration.ConfigurationBean;
 import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.expiration.UserExpirationCreatedTimeFactory;
 import com.gyorslevel.jmx.JMXBean;
@@ -27,6 +28,7 @@ public class UserExpireControllerTest {
     UserExpirationCreatedTimeFactory factory;
     UserExpireController controller = new UserExpireController(jmxBean);
     UserExpiration expiration;
+    long timeOut = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.TimeOut, Long.class);
 
     @Before
     public void setUp() {
@@ -94,7 +96,7 @@ public class UserExpireControllerTest {
     @Test
     public void testUserShouldBeDeletedBecauseExpired() {
 
-        doReturn(System.currentTimeMillis() - 1 - UserExpireController.TIME_OUT).when(factory).getCreatedTime();
+        doReturn((System.currentTimeMillis() - 1) - timeOut).when(factory).getCreatedTime();
         UserExpiration expiration = controller.createUser();
 
         Assert.assertTrue(controller.userExpired(expiration));
@@ -104,7 +106,7 @@ public class UserExpireControllerTest {
     @Test
     public void testUserShouldNotBeDeleted() {
 
-        doReturn(System.currentTimeMillis() + 1 - UserExpireController.TIME_OUT).when(factory).getCreatedTime();
+        doReturn((System.currentTimeMillis() + 100) - timeOut).when(factory).getCreatedTime();
         UserExpiration expiration = controller.createUser();
 
         Assert.assertFalse(controller.userExpired(expiration));
@@ -133,7 +135,7 @@ public class UserExpireControllerTest {
         }, 0, 5);
 
         // Wait
-        Thread.sleep(TimeUnit.MILLISECONDS.convert((UserExpireController.TIME_OUT/1000) + 5, TimeUnit.SECONDS));
+        Thread.sleep(TimeUnit.MILLISECONDS.convert((timeOut / 1000) + 5, TimeUnit.SECONDS));
 
         // Expect deleted
         Assert.assertFalse(controller.userExists(expiration.getUserEmail()));

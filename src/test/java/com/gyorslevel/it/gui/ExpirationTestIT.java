@@ -1,5 +1,6 @@
 package com.gyorslevel.it.gui;
 
+import com.gyorslevel.configuration.ConfigurationBean;
 import com.gyorslevel.timer.UserExpireController;
 import java.util.concurrent.TimeUnit;
 import junit.framework.Assert;
@@ -33,7 +34,9 @@ public class ExpirationTestIT extends AbstractGUITestIT {
         // Check if main page is opened
         Assert.assertEquals("Levelek", driver.findElement(By.cssSelector(".pageName")).getText());
 
-        Thread.sleep(TimeUnit.MILLISECONDS.convert((UserExpireController.TIME_OUT/1000) + 5, TimeUnit.SECONDS));
+        long timeOut = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.TimeOut, Long.class);
+        
+        Thread.sleep(TimeUnit.MILLISECONDS.convert((timeOut/1000) + 5, TimeUnit.SECONDS));
 
         openUrl("main");
 

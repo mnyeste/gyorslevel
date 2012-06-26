@@ -1,5 +1,6 @@
 package com.gyorslevel.jmx;
 
+import com.gyorslevel.configuration.ConfigurationBean;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -14,14 +15,11 @@ public class JMXBean {
 
     UsersRepositoryManagementMBean mbeanProxy;
 
-    static String getDomain() {
-        return "localhost";
-    }
-
-    public static String generateUserEmail() {
+    public String generateUserEmail() {
         UUID uuid = UUID.randomUUID();
         String email = uuid.toString().replaceAll("-", "");
-        return String.format("%s@%s", email, getDomain());
+        String domain = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.Domain, String.class);
+        return String.format("%s@%s", email, domain);
     }
 
     public void createUser(String email) {

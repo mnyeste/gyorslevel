@@ -1,10 +1,10 @@
 package com.gyorslevel.timer;
 
+import com.gyorslevel.configuration.ConfigurationBean;
 import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.expiration.UserExpirationCreatedTimeFactory;
 import com.gyorslevel.jmx.JMXBean;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -12,11 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class UserExpireController {
 
-    private final JMXBean jmxBean;
+    private JMXBean jmxBean;
     private List<UserExpiration> expirations = new ArrayList<UserExpiration>();
     private UserExpirationCreatedTimeFactory expirationCreatedTimeFactory = new UserExpirationCreatedTimeFactory();
-    // TODO: retrieve from config class with Commons Config >> mock for president. This we will be able to mock in very small delays
-    public static final long TIME_OUT = TimeUnit.MILLISECONDS.convert(30, TimeUnit.SECONDS);
 
     @Autowired
     public UserExpireController(JMXBean jmxBean) {
@@ -46,16 +44,15 @@ public class UserExpireController {
     }
 
     public List<String> listAllUsers() {
-        
+
         List<String> activeUserEmails = new ArrayList<String>();
-        
-        for (UserExpiration expiration : expirations)
-        {
+
+        for (UserExpiration expiration : expirations) {
             activeUserEmails.add(expiration.getUserEmail());
         }
-        
+
         return activeUserEmails;
-        
+
     }
 
     public void deleteUser(UserExpiration expiration) {
@@ -64,7 +61,7 @@ public class UserExpireController {
     }
 
     public UserExpiration createUser() {
-        String email = JMXBean.generateUserEmail();
+        String email = jmxBean.generateUserEmail();
         jmxBean.createUser(email);
         UserExpiration expiration = new UserExpiration(email, expirationCreatedTimeFactory.getCreatedTime());
         expirations.add(expiration);
@@ -77,9 +74,6 @@ public class UserExpireController {
 
     /**
      * @post: n.getCreatedTime() <= n.getCreatedTime()
-     *
-
-     *
      * @return
      */
     public List<UserExpiration> getExpirations() {
@@ -92,6 +86,7 @@ public class UserExpireController {
      * @return true if expiration.getCreatedTime() < NOW - TIME_OUT
      */
     boolean userExpired(UserExpiration expiration) {
-        return expiration.getCreatedTime() < System.currentTimeMillis() - TIME_OUT;
+        long timeOut = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.TimeOut, Long.class);
+        return expiration.getCreatedTime() < System.currentTimeMillis() - timeOut;
     }
 }

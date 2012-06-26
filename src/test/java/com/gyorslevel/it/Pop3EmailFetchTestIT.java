@@ -4,6 +4,7 @@
  */
 package com.gyorslevel.it;
 
+import com.gyorslevel.configuration.ConfigurationBean;
 import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.pop3.Pop3EmailFetcher;
 import com.gyorslevel.pop3.SimpleMessage;
@@ -22,6 +23,7 @@ import org.junit.Test;
 public class Pop3EmailFetchTestIT extends BaseITTest {
 
     String userEmail;
+    String domain = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.Domain, String.class);
 
     @TestResource(resourceTypes=ResourceType.UserExpireController)
     @Test
@@ -32,7 +34,7 @@ public class Pop3EmailFetchTestIT extends BaseITTest {
         
         sendTestMail();
         
-        SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages("localhost", userEmail, "pass");
+        SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages(domain, userEmail, "pass");
         Assert.assertEquals(1, messages.length);
         Assert.assertEquals("1", messages[0].getId());
     }
@@ -47,9 +49,9 @@ public class Pop3EmailFetchTestIT extends BaseITTest {
         String user = "test";
 
         String password = "test";
-        String fromAddress = "Pop3MailFetchTest@localhost";
+        String fromAddress = "Pop3MailFetchTest@"+domain;
         Properties properties = new Properties();
-        properties.put("mail.smtp.host", "localhost");
+        properties.put("mail.smtp.host", domain);
         properties.put("mail.smtp.port", "25");
         properties.put("mail.smtp.username", user);
         properties.put("mail.smtp.password", password);
@@ -64,8 +66,7 @@ public class Pop3EmailFetchTestIT extends BaseITTest {
             message.setSubject("Email from our JAMEs");
             message.setText("hiiiiii!!");
             Transport.send(message);
-            System.out.println("Email sent");
-            Thread.sleep(5000);
+            Thread.sleep(20000);
         } catch (MessagingException e) {
             e.printStackTrace();
         }

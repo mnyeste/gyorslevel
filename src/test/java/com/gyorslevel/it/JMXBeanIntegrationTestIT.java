@@ -11,7 +11,7 @@ public class JMXBeanIntegrationTestIT extends BaseITTest {
     @Test
     public void testCreate() throws Exception {
 
-        final String userEmail = JMXBean.generateUserEmail();
+        final String userEmail = new JMXBean().generateUserEmail();
         jmxbean.createUser(userEmail);
 
         List<String> asList = jmxbean.listAllUsers();

@@ -1,5 +1,6 @@
 package com.gyorslevel.it.gui;
 
+import com.gyorslevel.configuration.ConfigurationBean;
 import com.gyorslevel.it.BaseITTest;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
@@ -20,11 +21,12 @@ public class AbstractGUITestIT extends BaseITTest {
     protected static WebDriver driver;
     protected static String baseUrl;
     protected static StringBuffer verificationErrors = new StringBuffer();
+    protected static String domain = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.Domain, String.class);
 
     @BeforeClass
     public static void setUpClass() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://localhost:8080";
+        baseUrl = "http://" + domain + ":8080";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
