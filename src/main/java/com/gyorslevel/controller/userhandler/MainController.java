@@ -59,8 +59,8 @@ public class MainController extends UserHandlerController {
     private void addFetchedMails(ModelMap model, HttpSession session) {
         try {
             UserExpiration expiration = (UserExpiration) session.getAttribute("expiration");
-            String domain = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.Domain, String.class);
-            SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages(domain, expiration.getUserEmail(), "pass");
+            String jamesEmailHost = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.JamesHost, String.class);
+            SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages(jamesEmailHost, expiration.getUserEmail(), "pass");
             model.addAttribute("messages", messages);
             session.setAttribute("messages", messages);
         } catch (MessagingException ex) {

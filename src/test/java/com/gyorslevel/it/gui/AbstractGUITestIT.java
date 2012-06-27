@@ -21,12 +21,12 @@ public class AbstractGUITestIT extends BaseITTest {
     protected static WebDriver driver;
     protected static String baseUrl;
     protected static StringBuffer verificationErrors = new StringBuffer();
-    protected static String domain = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.Domain, String.class);
+    protected static String jamesHost = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.JamesHost, String.class);
 
     @BeforeClass
     public static void setUpClass() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://" + domain + ":8080";
+        baseUrl = "http://" + jamesHost + ":8080";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 

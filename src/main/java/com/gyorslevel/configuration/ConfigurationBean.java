@@ -13,7 +13,9 @@ public class ConfigurationBean {
 
     public enum ConfigurationBeanKey {
 
-        Domain("jmx.domain", String.class), TimeOut("expiration.timeout", Long.class);
+        Domain("gyorslevel.domain", String.class), 
+        TimeOut("expiration.timeout", Long.class),
+        JamesHost("james.host", String.class);
         private String key;
         private Class type;
 
@@ -42,6 +44,7 @@ public class ConfigurationBean {
             Configuration config = new PropertiesConfiguration("/etc/gyorslevel/gyorslevel.cfg");
 
             switch (key) {
+                case JamesHost:
                 case Domain:
                     return type.cast(config.getString(key.getKey()));
                 case TimeOut:

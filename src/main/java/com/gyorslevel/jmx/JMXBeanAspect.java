@@ -25,10 +25,10 @@ public class JMXBeanAspect {
 
         try {
 
-            String domain = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.Domain, String.class);
+            String jamesHost = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.JamesHost, String.class);
 
             JMXServiceURL url = new JMXServiceURL(
-                    "service:jmx:rmi:///jndi/rmi://" + domain + ":9999/jmxrmi");
+                    "service:jmx:rmi:///jndi/rmi://" + jamesHost + ":9999/jmxrmi");
 
             JMXConnector jmxc = JMXConnectorFactory.connect(url, null);
 
