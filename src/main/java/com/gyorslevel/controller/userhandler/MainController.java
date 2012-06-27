@@ -36,13 +36,9 @@ public class MainController extends UserHandlerController {
         createUserIfMissing(session);
         addUserExpirationToModel(model, session);
         addFetchedMails(model, session);
-        return getPageName();
+        addBodyPageNameToModel(model, "mainbody");
+        return "template";
 
-    }
-
-    @Override
-    public String getPageName() {
-        return "main";
     }
 
     private void createUserIfMissing(HttpSession session) {

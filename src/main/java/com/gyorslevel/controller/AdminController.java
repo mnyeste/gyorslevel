@@ -22,13 +22,9 @@ public class AdminController extends MyAbstractController {
     public String process(ModelMap model) {
         addTitleToModel(model);
         addUserEmailsToModel(model);
-        return getPageName();
+        addBodyPageNameToModel(model, "adminbody");
+        return "template";
 
-    }
-
-    @Override
-    public String getPageName() {
-        return "admin";
     }
 
     private void addUserEmailsToModel(ModelMap model) {

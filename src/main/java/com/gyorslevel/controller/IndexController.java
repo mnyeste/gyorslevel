@@ -12,12 +12,9 @@ public class IndexController extends MyAbstractController {
     @RequestMapping(method = RequestMethod.GET)
     public String process(ModelMap model) {
         addTitleToModel(model);
-        return getPageName();
+        addBodyPageNameToModel(model, "indexbody");
+        return "template";
 
     }
 
-    @Override
-    public String getPageName() {
-        return "index";
-    }
 }

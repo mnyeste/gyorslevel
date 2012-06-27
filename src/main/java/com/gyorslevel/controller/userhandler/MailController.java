@@ -21,21 +21,18 @@ public class MailController extends UserHandlerController {
     
     @RequestMapping(method = RequestMethod.GET)
     public String process(ModelMap model, HttpServletRequest request, HttpSession session) {
-        
+
         if (userSessionExpired(session))
         {
-            return "expired";
+            return "redirect:expired";
         }
         
         addTitleToModel(model);
         addUserExpirationToModel(model, session);
         addEmailMessageToModel(model, session, request.getParameter("id"));
-        return getPageName();
-    }
-
-    @Override
-    public String getPageName() {
-        return "mail";
+        addBodyPageNameToModel(model, "mailbody");
+        
+        return "template";
     }
 
     private void addEmailMessageToModel(ModelMap model, HttpSession session, String id) {

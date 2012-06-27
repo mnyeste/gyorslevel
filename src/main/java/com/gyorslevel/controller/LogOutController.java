@@ -28,13 +28,9 @@ public class LogOutController extends MyAbstractController {
     public String process(ModelMap model, HttpSession session) {
         addTitleToModel(model);
         invalidateSession(session);
-        return getPageName();
+        addBodyPageNameToModel(model, "indexbody");
+        return "template";
 
-    }
-
-    @Override
-    public String getPageName() {
-        return "index";
     }
 
     private void invalidateSession(HttpSession session) {

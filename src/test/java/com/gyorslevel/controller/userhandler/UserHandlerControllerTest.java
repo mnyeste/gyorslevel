@@ -33,12 +33,6 @@ public class UserHandlerControllerTest {
         expirationController = mock(UserExpireController.class);
         
         controller = new UserHandlerController() {
-
-            @Override
-            protected String getPageName() {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
         };
         
         Whitebox.setInternalState(controller, "expireController", expirationController);

@@ -17,12 +17,8 @@ public class ExpireController extends MyAbstractController {
     @RequestMapping(method = RequestMethod.GET)
     public String process(ModelMap model, HttpSession session) {
         addTitleToModel(model);
-        return getPageName();
-    }
-
-    @Override
-    public String getPageName() {
-        return "expired";
+        addBodyPageNameToModel(model, "expiredbody");
+        return "template";
     }
 
 }

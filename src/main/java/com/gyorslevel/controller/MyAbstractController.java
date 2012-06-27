@@ -1,6 +1,5 @@
 package com.gyorslevel.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.ModelMap;
 
 public abstract class MyAbstractController {
@@ -9,6 +8,8 @@ public abstract class MyAbstractController {
         model.addAttribute("title", "Gyorslevél");
     }
     
-    protected abstract String getPageName();
+    protected void addBodyPageNameToModel(ModelMap model, String bodyPageName) {
+        model.addAttribute("bodyPage", bodyPageName);
+    }
     
 }
