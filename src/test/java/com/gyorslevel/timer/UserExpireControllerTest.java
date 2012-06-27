@@ -1,6 +1,7 @@
 package com.gyorslevel.timer;
 
 import com.gyorslevel.configuration.ConfigurationBean;
+import com.gyorslevel.configuration.ConfigurationBean.ConfigurationBeanKey;
 import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.expiration.UserExpirationCreatedTimeFactory;
 import com.gyorslevel.jmx.JMXBean;
@@ -10,16 +11,20 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import junit.framework.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.mockito.Mockito.*;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.reflect.Whitebox;
 
 /**
  * @author dave00
  */
+@PrepareForTest( ConfigurationBean.class )
 @RunWith(PowerMockRunner.class)
 public class UserExpireControllerTest {
 
@@ -28,7 +33,7 @@ public class UserExpireControllerTest {
     UserExpirationCreatedTimeFactory factory;
     UserExpireController controller = new UserExpireController(jmxBean);
     UserExpiration expiration;
-    long timeOut = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.TimeOut, Long.class);
+    long timeOut;
 
     @Before
     public void setUp() {
@@ -39,6 +44,12 @@ public class UserExpireControllerTest {
         Whitebox.setInternalState(controller, "expirationCreatedTimeFactory", factory);
 
         expiration = controller.createUser();
+
+        PowerMockito.mockStatic(ConfigurationBean.class);
+        PowerMockito.when(ConfigurationBean.getValue(ConfigurationBeanKey.TimeOut, Long.class)).thenReturn(10000L);
+        
+        timeOut = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.TimeOut, Long.class);
+        
     }
 
     @Test
