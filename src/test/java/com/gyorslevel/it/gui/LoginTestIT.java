@@ -25,7 +25,7 @@ public class LoginTestIT extends AbstractGUITestIT {
     @Test
     public void testLogin() throws Exception {
         openUrl("index");
-        driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+        driver.findElement(By.name("login")).click();
         Assert.assertEquals("Levelek", driver.findElement(By.cssSelector(".pageName")).getText());
     }
           

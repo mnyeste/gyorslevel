@@ -4,7 +4,5 @@
 
 <h2 class="pageName">Időtúllépés</h2>
 <h3>Az Ön fiókjának használati ideje lejárt.</h3>
-<p>
-    <b>Köszönjük hogy használta szolgáltatásunkat!&nbsp;</b>
-    Amennyiben új időkeretet szeretne kérem kattintson <a href="/index"><b>ide</b></a>!
-</p>
+<p><b>Köszönjük hogy használta szolgáltatásunkat!&nbsp;</b></p>
+<a class="actionButton" href="/index">Irány a főoldalra!</a>

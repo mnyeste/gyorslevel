@@ -29,7 +29,7 @@ public class ExpirationTestIT extends AbstractGUITestIT {
         openUrl("index");
 
         // Login
-        driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+        driver.findElement(By.name("login")).click();
 
         // Check if main page is opened
         Assert.assertEquals("Levelek", driver.findElement(By.cssSelector(".pageName")).getText());

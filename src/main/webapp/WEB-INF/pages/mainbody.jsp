@@ -16,7 +16,6 @@
 </script>
 
 <h2 class="pageName">Levelek</h2>
-<h2>${expiration.userEmail}</h2>
 
 <p>
     <c:choose>
@@ -25,30 +24,32 @@
         </c:when>
         <c:otherwise>
 
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Tárgy</th>
-                    <th>Feladó</th>
-                    <th>Dátum</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                <c:forEach var="message" items="${messages}">
+        <div class="datagrid">
+            <table>
+                <thead>
                     <tr>
-                        <td><a href="/mail?id=${message.id}">${message.subject}</a></td>
-                        <td>${message.from}</td>
-                        <td>${message.sentDate}</td>
+                        <th>Tárgy</th>
+                        <th>Feladó</th>
+                        <th>Dátum</th>
                     </tr>
-                </c:forEach>
+                </thead>
+                <tbody>
 
-            </tbody>
-        </table>
+                    <c:forEach var="message" items="${messages}" varStatus="lineInfo">
+                        
+                        <tr class="<c:out value="${(lineInfo.index % 2)==0?'alt':''}"/>">
+                            <td><a href="/mail?id=${message.id}">${message.subject}</a></td>
+                            <td>${message.from}</td>
+                            <td>${message.sentDate}</td>
+                        </tr>
+                    </c:forEach>
+
+                </tbody>
+            </table>
+        </div>
 
     </c:otherwise>
 </c:choose>
 </p>
 
-<a href="/logout">Kilépés</a>
-
+<a class="actionButton" href="/logout">Kilépés</a>

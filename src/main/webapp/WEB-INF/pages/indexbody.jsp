@@ -4,6 +4,4 @@
 
 <h2 class="pageName">Üdvözöljük!</h2>
 
-<form action="/main">
-    <input type="submit" value="Új fiók" />
-</form>
+<a class="actionButton" href="/main" name="login">Új fiók</a>
