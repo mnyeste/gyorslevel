@@ -1,5 +1,7 @@
 package com.gyorslevel.configuration;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -13,8 +15,9 @@ public class ConfigurationBean {
 
     public enum ConfigurationBeanKey {
 
-        Domain("gyorslevel.domain", String.class), 
+        Domain("gyorslevel.domain", String.class),
         TimeOut("expiration.timeout", Long.class),
+        ContextFolder("context.folder", String.class),
         JamesHost("james.host", String.class);
         private String key;
         private Class type;
@@ -32,6 +35,8 @@ public class ConfigurationBean {
             return type;
         }
     }
+    // This can be a cache map later on
+    private static Map<String, Object> configValues = new ConcurrentHashMap<String, Object>();
 
     public static <T> T getValue(ConfigurationBeanKey key, Class<T> type) {
 
@@ -44,6 +49,7 @@ public class ConfigurationBean {
             Configuration config = new PropertiesConfiguration("/etc/gyorslevel/gyorslevel.cfg");
 
             switch (key) {
+                case ContextFolder:
                 case JamesHost:
                 case Domain:
                     return type.cast(config.getString(key.getKey()));
@@ -61,4 +67,10 @@ public class ConfigurationBean {
         }
 
     }
+    
+    public static void setValue(String key, Object value)
+    {
+        configValues.put(key, value);
+    }
+    
 }
