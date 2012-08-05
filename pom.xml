@@ -14,16 +14,8 @@
     <properties>
         <spring.version>3.0.5.RELEASE</spring.version>
         <powermock.version>1.4.12</powermock.version>
+		<jetty.images.path>${project.build.directory}/images</jetty.images.path>        
     </properties>
-    
-    <repositories>
-        <repository>
-            <id>mvn-public</id>
-            <name>MVNRepository</name>
-            <url>http://mvnrepository.com</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.powermock</groupId>
@@ -182,15 +174,15 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>2.4</version>
+	                <configuration>
+	                    <source>1.6</source>
+	                    <target>1.6</target>
+	                </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.mortbay.jetty</groupId>
                     <artifactId>maven-jetty-plugin</artifactId>
                     <version>6.1.26</version>
-                    <configuration>
-                        <reload>manual</reload>
-                        <contextPath>/</contextPath>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -198,21 +190,43 @@
                     <version>2.12</version>
                 </plugin>
             </plugins>
-
-
         </pluginManagement>
         <plugins>
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <reload>manual</reload>
+                    <contextPath>/</contextPath>
+					<contextHandlers>
+						<contextHandler implementation="org.mortbay.jetty.handler.ContextHandler">
+							<contextPath>/images</contextPath>
+							<resourceBase>${project.build.directory}/images</resourceBase>
+							<handler implementation="org.mortbay.jetty.handler.ResourceHandler" />
+						</contextHandler>
+					</contextHandlers>
                 </configuration>
             </plugin>
-
-
-
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+					<configuration>
+							<resources>
+								<resource>
+									<directory>${basedir}/src/test/resources/images</directory>
+								</resource>
+							</resources>
+						<outputDirectory>${jetty.images.path}</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
     </build>
 
