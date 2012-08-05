@@ -143,7 +143,7 @@ public class Pop3EmailFetcher {
         } else if (content instanceof InputStream) {
 
             final String contextFolder = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.ContextFolder, String.class);
-            final String mailImagesFolder = "images";
+            final String mailImagesFolder = "static";
             final String fileName = part.getFileName();
             final String contentId = part.getHeader("Content-ID")[0].replaceAll("<", "").replaceAll(">", "");
 

@@ -14,7 +14,7 @@
     <properties>
         <spring.version>3.0.5.RELEASE</spring.version>
         <powermock.version>1.4.12</powermock.version>
-		<jetty.images.path>${project.build.directory}/images</jetty.images.path>        
+	<jetty.static.path>${project.build.directory}/static</jetty.static.path>        
     </properties>
     <dependencies>
         <dependency>
@@ -206,8 +206,8 @@
                     <contextPath>/</contextPath>
 					<contextHandlers>
 						<contextHandler implementation="org.mortbay.jetty.handler.ContextHandler">
-							<contextPath>/images</contextPath>
-							<resourceBase>${project.build.directory}/images</resourceBase>
+							<contextPath>/static</contextPath>
+							<resourceBase>${project.build.directory}/static</resourceBase>
 							<handler implementation="org.mortbay.jetty.handler.ResourceHandler" />
 						</contextHandler>
 					</contextHandlers>
@@ -228,7 +228,7 @@
 									<directory>${basedir}/src/test/resources/images</directory>
 								</resource>
 							</resources>
-						<outputDirectory>${jetty.images.path}</outputDirectory>
+						<outputDirectory>${jetty.static.path}</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
