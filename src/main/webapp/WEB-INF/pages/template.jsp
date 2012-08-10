@@ -66,7 +66,7 @@
             <!-- Begin Footer -->
             <div id="footer">
 
-                Thanks for template to: http://www.code-sucks.com		
+                Thanks for template to: http://www.code-sucks.com |  http://quackit.com	
 
             </div>
             <!-- End Footer -->

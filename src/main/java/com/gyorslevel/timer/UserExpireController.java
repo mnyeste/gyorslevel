@@ -23,7 +23,7 @@ public class UserExpireController {
 
     public void expireUsers() {
 
-        List<UserExpiration> expirationsSnapShot = getExpirations();
+        List<UserExpiration> expirationsSnapShot = new ArrayList(getExpirations());
         Iterator<UserExpiration> iterator = expirationsSnapShot.iterator();
 
         while (iterator.hasNext()) {
@@ -37,7 +37,7 @@ public class UserExpireController {
             }
 
             // We remove all expired users
-            iterator.remove();
+            deleteUser(userExpiration);
 
         }
 

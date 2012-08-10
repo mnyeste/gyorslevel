@@ -71,6 +71,17 @@ body {
     padding: 10px;
 }
 
+.messageDiv {
+    border:1px solid black;
+    width:450px;
+    overflow-y:hidden;
+    overflow-x:scroll;
+}
+
+.messageDiv p {
+    width:460px;
+}
+
 .highlighted {
     background: #ABBEBE;
     padding: 2px;
