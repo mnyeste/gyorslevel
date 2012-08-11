@@ -56,7 +56,7 @@ public class MainController extends UserHandlerController {
         try {
             UserExpiration expiration = (UserExpiration) session.getAttribute("expiration");
             String jamesEmailHost = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.JamesHost, String.class);
-            SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages(jamesEmailHost, expiration.getUserEmail(), "pass");
+            SimpleMessage[] messages = new Pop3EmailFetcher().fetchMessages(jamesEmailHost, expiration.getUserName(), "pass");
             model.addAttribute("messages", messages);
             session.setAttribute("messages", messages);
         } catch (MessagingException ex) {

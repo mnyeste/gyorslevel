@@ -34,7 +34,7 @@ public class Pop3EmailFetchTestIT extends BaseITTest {
         
         sendTestMail();
         
-        SimpleMessage[] messages = Pop3EmailFetcher.fetchMessages(domain, userEmail, "pass");
+        SimpleMessage[] messages = new Pop3EmailFetcher().fetchMessages(domain, expiration.getUserName(), "pass");
         Assert.assertEquals(1, messages.length);
         Assert.assertEquals("1", messages[0].getId());
     }

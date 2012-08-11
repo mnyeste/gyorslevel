@@ -5,15 +5,16 @@ import com.gyorslevel.configuration.ConfigurationBean.ConfigurationBeanKey;
 import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.expiration.UserExpirationCreatedTimeFactory;
 import com.gyorslevel.jmx.JMXBean;
+import java.io.File;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import junit.framework.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.mockito.Mockito.*;
@@ -24,32 +25,39 @@ import org.powermock.reflect.Whitebox;
 /**
  * @author dave00
  */
-@PrepareForTest( ConfigurationBean.class )
+@PrepareForTest(ConfigurationBean.class)
 @RunWith(PowerMockRunner.class)
 public class UserExpireControllerTest {
 
     // Mock JMXBean
-    JMXBean jmxBean = mock(JMXBean.class);
+    JMXBean jmxBean;
     UserExpirationCreatedTimeFactory factory;
-    UserExpireController controller = new UserExpireController(jmxBean);
+    UserExpireController controller;
     UserExpiration expiration;
     long timeOut;
+    String tempdir = System.getProperty("java.io.tmpdir");
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
+
+        jmxBean = mock(JMXBean.class);
+        controller = new UserExpireController(jmxBean);
 
         factory = mock(UserExpirationCreatedTimeFactory.class);
         doReturn(System.currentTimeMillis()).when(factory).getCreatedTime();
 
         Whitebox.setInternalState(controller, "expirationCreatedTimeFactory", factory);
 
-        expiration = controller.createUser();
+        PowerMockito.when(jmxBean.generateUserEmail()).thenReturn(getNextEmail(), getPossibleUserEmails());
 
         PowerMockito.mockStatic(ConfigurationBean.class);
         PowerMockito.when(ConfigurationBean.getValue(ConfigurationBeanKey.TimeOut, Long.class)).thenReturn(10000L);
-        
+        PowerMockito.when(ConfigurationBean.getValue(ConfigurationBeanKey.ContextFolder, String.class)).thenReturn(tempdir);
+
+        expiration = controller.createUser();
+
         timeOut = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.TimeOut, Long.class);
-        
+
     }
 
     @Test
@@ -69,6 +77,21 @@ public class UserExpireControllerTest {
         Assert.assertEquals(expiration.getCreatedTime(), 1234L);
 
         controller.deleteUser(expiration);
+    }
+
+    @Test
+    public void testCreatedUserExpiryCreatesUserFolder() {
+
+        UserExpiration expiration = controller.createUser();
+        String contextFile = ConfigurationBean.getValue(ConfigurationBeanKey.ContextFolder, String.class);
+
+        File tempFile = new File(contextFile + "/" + expiration.getUserName());
+
+        Assert.assertTrue(tempFile.exists());
+
+        controller.deleteUser(expiration);
+
+        Assert.assertFalse(tempFile.exists());
     }
 
     @Test
@@ -151,5 +174,17 @@ public class UserExpireControllerTest {
         // Expect deleted
         Assert.assertFalse(controller.userExists(expiration.getUserEmail()));
 
+    }
+
+    private String[] getPossibleUserEmails() {
+        String[] userEmails = new String[100];
+        for (int i = 0; i < 100; i++) {
+            userEmails[i] = getNextEmail();
+        }
+        return userEmails;
+    }
+
+    private String getNextEmail() {
+        return Long.toString(System.nanoTime()) + "@gyorslevel.hu";
     }
 }

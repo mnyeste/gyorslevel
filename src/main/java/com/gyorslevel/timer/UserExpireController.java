@@ -4,7 +4,13 @@ import com.gyorslevel.configuration.ConfigurationBean;
 import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.expiration.UserExpirationCreatedTimeFactory;
 import com.gyorslevel.jmx.JMXBean;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
+import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -12,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class UserExpireController {
 
+    private static Logger logger = Logger.getLogger(UserExpireController.class);
     private JMXBean jmxBean;
     private List<UserExpiration> expirations = new ArrayList<UserExpiration>();
     private UserExpirationCreatedTimeFactory expirationCreatedTimeFactory = new UserExpirationCreatedTimeFactory();
@@ -56,16 +63,37 @@ public class UserExpireController {
     }
 
     public void deleteUser(UserExpiration expiration) {
+
         jmxBean.deleteUser(expiration.getUserEmail());
         expirations.remove(expiration);
+
+        String contextFolder = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.ContextFolder, String.class);
+
+        // Delete user folder
+        try {
+            File userDirectory = new File(contextFolder + "/" + expiration.getUserName());
+            FileUtils.deleteDirectory(userDirectory);
+        } catch (IOException ex) {
+            logger.error("Failed to delete directory userName: " + expiration.getUserName(), ex);
+            throw new RuntimeException(ex);
+        }
+
     }
 
     public UserExpiration createUser() {
+
         String email = jmxBean.generateUserEmail();
         jmxBean.createUser(email);
         UserExpiration expiration = new UserExpiration(email, expirationCreatedTimeFactory.getCreatedTime());
+        // Create user folder
+        String contextFolder = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.ContextFolder, String.class);
+        File userDirectory = new File(contextFolder + "/" + expiration.getUserName());
+        userDirectory.mkdir();
+        // Store expiration
         expirations.add(expiration);
+
         return expiration;
+
     }
 
     public boolean userExists(String email) {
@@ -74,6 +102,7 @@ public class UserExpireController {
 
     /**
      * @post: n.getCreatedTime() <= n.getCreatedTime()
+     *
      * @return
      */
     public List<UserExpiration> getExpirations() {

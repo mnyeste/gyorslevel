@@ -1,8 +1,9 @@
 package com.gyorslevel.expiration;
 
 /**
- * Representing a User Expiration made up of an e-mail address and the time
- * was created.
+ * Representing a User Expiration made up of an e-mail address and the time was
+ * created.
+ *
  * @author dave00
  */
 public class UserExpiration implements Comparable<UserExpiration> {
@@ -17,7 +18,7 @@ public class UserExpiration implements Comparable<UserExpiration> {
         this.userEmail = userEmail;
         this.createdTime = createdTime;
     }
-    
+
     /*
      * Used for equality checks
      */
@@ -28,11 +29,15 @@ public class UserExpiration implements Comparable<UserExpiration> {
     public String getUserEmail() {
         return userEmail;
     }
+    
+    public String getUserName() {
+        return userEmail.substring(0, userEmail.indexOf('@'));
+    }
 
     public long getCreatedTime() {
         return createdTime;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -57,6 +62,6 @@ public class UserExpiration implements Comparable<UserExpiration> {
 
     @Override
     public int compareTo(UserExpiration o) {
-    	return Long.valueOf(createdTime).compareTo(Long.valueOf(o.createdTime));
-	}
+        return Long.valueOf(createdTime).compareTo(Long.valueOf(o.createdTime));
+    }
 }

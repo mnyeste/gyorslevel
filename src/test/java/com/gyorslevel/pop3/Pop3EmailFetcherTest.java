@@ -28,7 +28,7 @@ public class Pop3EmailFetcherTest {
         doReturn(true).when(message).isMimeType("text/plain");
         doReturn("My sample text").when(message).getContent();
         
-        String content = Pop3EmailFetcher.getContent(message);
+        String content = new Pop3EmailFetcher().getContent(message);
         Assert.assertEquals("My sample text", content);
         
         
@@ -84,7 +84,7 @@ public class Pop3EmailFetcherTest {
         doReturn(true).when(message).isMimeType("multipart/related");
         doReturn(multipart).when(message).getContent();
         
-        Assert.assertEquals("Izeke"+nestedtextPart, Pop3EmailFetcher.getContent(message));
+        Assert.assertEquals("Izeke"+nestedtextPart, new Pop3EmailFetcher().getContent(message));
         
         
     }
