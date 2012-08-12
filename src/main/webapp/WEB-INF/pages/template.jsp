@@ -28,8 +28,24 @@
                 <!-- Begin Left Column -->
                 <div id="leftcolumn">
 
-                    Hirdetmények
+                    <p>
+                        <b>Hirdetmények</b></br>
+                        Oldalunk tesztelés alatt!
+                    </p>
+                    
+                    <p>
+                        
+                        Látogatottság:</br>
+                        
+                        <!-- Start counter code -->
 
+                        <a href="http://xyz.freelogs.com/stats/d/dave00ster/" target="_top"><img border="0" alt="web counter code" src="http://xyz.freelogs.com/counter/index.php?u=dave00ster&s=ainv" ALIGN="middle" HSPACE="4" VSPACE="2"></a><script src=http://xyz.freelogs.com/counter/script.php?u=dave00ster></script>
+                        <br><a style="font-size:12" href="http://freelogs.com/" target="_top"><font style="font-size:12" color="#666666">web counter code</font></a>
+
+                        <!-- End counter code -->
+                        
+                    </p>
+                    
                 </div>
                 <!-- End Left Column -->
 
@@ -55,7 +71,7 @@
                 <!-- Begin Right Column -->
                 <div id="rightcolumn">
 
-                    Reklámok
+                    <img src="http://www.deviantart.com/download/72078315/Heineken_Advertisement_by_Stan88.jpg" width="170"/>
 
                 </div>
                 <!-- End Right Column -->
