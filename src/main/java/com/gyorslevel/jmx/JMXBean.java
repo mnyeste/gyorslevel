@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import org.apache.james.user.api.UsersRepositoryManagementMBean;
+import org.apache.james.domainlist.api.DomainListManagementMBean;
+import org.apache.log4j.Logger;
 
 /**
  * TODO: add log4j
@@ -13,7 +15,8 @@ import org.apache.james.user.api.UsersRepositoryManagementMBean;
  */
 public class JMXBean {
 
-    UsersRepositoryManagementMBean mbeanProxy;
+    UsersRepositoryManagementMBean userRepositoryManagementMBeanProxy;
+    DomainListManagementMBean domainListManagementMBean;
 
     public String generateUserEmail() {
         UUID uuid = UUID.randomUUID();
@@ -24,7 +27,7 @@ public class JMXBean {
 
     public void createUser(String email) {
         try {
-            mbeanProxy.addUser(email, "pass");
+            userRepositoryManagementMBeanProxy.addUser(email, "pass");
         } catch (Exception exception) {
             System.err.println(exception);
             throw new RuntimeException(exception);
@@ -33,7 +36,7 @@ public class JMXBean {
 
     public void deleteUser(String email) {
         try {
-            mbeanProxy.deleteUser(email);
+            userRepositoryManagementMBeanProxy.deleteUser(email);
         } catch (Exception exception) {
             System.err.println(exception);
             throw new RuntimeException(exception);
@@ -42,7 +45,7 @@ public class JMXBean {
 
     public List<String> listAllUsers() {
         try {
-            return Arrays.asList(mbeanProxy.listAllUsers());
+            return Arrays.asList(userRepositoryManagementMBeanProxy.listAllUsers());
         } catch (Exception exception) {
             System.err.println(exception);
             throw new RuntimeException(exception);
