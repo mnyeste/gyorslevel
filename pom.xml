@@ -12,7 +12,7 @@
 	<url>http://maven.apache.org</url>
 
 	<scm>
-		<connection>scm:git:git://github.com/mnyeste/gyorslevel.git</connection>
+		<connection>scm:git:git://github.com/dave00/gyorslevel.git</connection>
 	</scm>
 
 	<properties>
