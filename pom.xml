@@ -154,16 +154,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.james</groupId>
-			<artifactId>james-server-user-api</artifactId>
-			<version>3.0-M2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.james</groupId>
-			<artifactId>james-server-user-library</artifactId>
-			<version>3.0-M2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.james</groupId>
 			<artifactId>james-server-data-api</artifactId>
 			<version>3.0-beta4</version>
 		</dependency>
@@ -172,11 +162,6 @@
 			<artifactId>james-server-data-library</artifactId>
 			<version>3.0-beta4</version>
 		</dependency>
-                <dependency>
-                    <groupId>org.apache.james</groupId>
-                    <artifactId>james-server-domainlist-api</artifactId>
-                    <version>3.0-M2</version>
-                </dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
