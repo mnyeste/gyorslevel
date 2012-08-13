@@ -1,6 +1,8 @@
 package com.gyorslevel.controller;
 
-import javax.servlet.http.HttpSession;
+import java.io.InputStream;
+import java.util.Properties;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.ui.ModelMap;
 
@@ -9,22 +11,28 @@ public abstract class MyAbstractController {
     private static Logger logger = Logger.getLogger(MyAbstractController.class);
     private static String applicationVersion;
 
-    protected void addVersionToSession(HttpSession session) {
+    protected void addVersionToSession(HttpServletRequest request) {
 
         if (applicationVersion == null) {
+
             try {
-                Package pack = this.getClass().getPackage();
-                applicationVersion = null;
-                applicationVersion = pack.getImplementationVersion();
-                if (applicationVersion == null) {
-                    applicationVersion = pack.getSpecificationVersion();
+
+                InputStream inputStream = request.getSession().getServletContext().getResourceAsStream("/META-INF/MANIFEST.MF");
+
+                if (inputStream == null) {
+                    applicationVersion = "development version";
+                } else {
+                    Properties prop = new Properties();
+                    prop.load(inputStream);
+                    applicationVersion = (String) prop.get("Implementation-Version");
                 }
+
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
 
-        session.setAttribute("applicationVersion", applicationVersion);
+        request.getSession().setAttribute("applicationVersion", applicationVersion);
 
     }
 

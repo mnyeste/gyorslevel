@@ -19,7 +19,7 @@ public class IndexController extends MyAbstractController {
         addTitleToModel(model);
         addBodyPageNameToModel(model, "indexbody");
         addContextFolderToConfiguration(request);
-        addVersionToSession(request.getSession());
+        addVersionToSession(request);
         return "template";
     }
 
