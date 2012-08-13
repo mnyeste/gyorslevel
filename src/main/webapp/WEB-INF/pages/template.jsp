@@ -82,7 +82,16 @@
             <!-- Begin Footer -->
             <div id="footer">
 
-                Thanks for template to: http://www.code-sucks.com |  http://quackit.com	
+                <c:choose>
+                    <c:when test="${sessionScope.applicationVersion == null}">
+                        Version: development version
+                    </c:when>
+                    <c:otherwise>
+                        Version: <c:out value="${sessionScope.applicationVersion}"/>
+                    </c:otherwise>
+                </c:choose>
+                
+                 | Thanks for template to: http://www.code-sucks.com |  http://quackit.com	
 
             </div>
             <!-- End Footer -->
