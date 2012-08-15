@@ -6,6 +6,7 @@ package com.gyorslevel.controller;
 
 import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.timer.UserExpireController;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,10 +26,15 @@ public class LogOutController extends MyAbstractController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String process(ModelMap model, HttpSession session) {
+    public String process(ModelMap model, HttpServletRequest request) {
+        
+        HttpSession session = request.getSession();
+        
         addTitleToModel(model);
         invalidateSession(session);
         addBodyPageNameToModel(model, "indexbody");
+        addVersionToSession(request);
+        
         return "template";
 
     }

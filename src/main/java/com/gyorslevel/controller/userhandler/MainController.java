@@ -8,6 +8,7 @@ import com.gyorslevel.timer.UserExpireController;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,9 @@ public class MainController extends UserHandlerController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String process(ModelMap model, HttpSession session) {
+    public String process(ModelMap model, HttpServletRequest request) {
+        
+        HttpSession session = request.getSession();
         
         if (userSessionExpired(session))
         {
@@ -37,6 +40,7 @@ public class MainController extends UserHandlerController {
         addUserExpirationToModel(model, session);
         addFetchedMails(model, session);
         addBodyPageNameToModel(model, "mainbody");
+        addVersionToSession(request);
         return "template";
 
     }
