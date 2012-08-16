@@ -1,5 +1,6 @@
 package com.gyorslevel.controller;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public abstract class MyAbstractController {
                     applicationVersion = (String) prop.get("Implementation-Version");
                 }
 
-            } catch (Exception e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }

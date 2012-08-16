@@ -4,6 +4,7 @@ import com.gyorslevel.configuration.ConfigurationBean;
 import com.gyorslevel.it.BaseITTest;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
+import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -18,16 +19,19 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  */
 public class AbstractGUITestIT extends BaseITTest {
 
+    private static Logger logger = Logger.getLogger(AbstractGUITestIT.class);
+    
     protected static WebDriver driver;
     protected static String baseUrl;
-    protected static StringBuffer verificationErrors = new StringBuffer();
-    protected static String jamesHost = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.JamesHost, String.class);
+    
+    protected final static StringBuffer verificationErrors = new StringBuffer();
+    protected final static String jamesHost = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.JamesHost, String.class);
 
     @BeforeClass
     public static void setUpClass() throws Exception {
         driver = new FirefoxDriver();
         baseUrl = "http://" + jamesHost + ":8080";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     }
 
     @AfterClass
@@ -44,6 +48,7 @@ public class AbstractGUITestIT extends BaseITTest {
             driver.findElement(by);
             return true;
         } catch (NoSuchElementException e) {
+            logger.error(e);
             return false;
         }
     }

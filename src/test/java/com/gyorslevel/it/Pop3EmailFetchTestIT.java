@@ -14,6 +14,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import junit.framework.Assert;
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Test;
 
@@ -22,6 +23,8 @@ import org.junit.Test;
  */
 public class Pop3EmailFetchTestIT extends BaseITTest {
 
+    private static Logger logger = Logger.getLogger(Pop3EmailFetchTestIT.class);
+    
     String userEmail;
     String domain = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.Domain, String.class);
 
@@ -68,7 +71,7 @@ public class Pop3EmailFetchTestIT extends BaseITTest {
             Transport.send(message);
             Thread.sleep(20000);
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         
     }

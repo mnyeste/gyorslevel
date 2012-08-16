@@ -2,7 +2,6 @@ package com.gyorslevel.controller.userhandler;
 
 import com.gyorslevel.expiration.UserExpiration;
 import com.gyorslevel.timer.UserExpireController;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,7 +11,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.mockito.Mockito.*;
 import org.powermock.reflect.Whitebox;
-import org.springframework.ui.ModelMap;
 
 /**
  * @author dave00

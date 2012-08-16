@@ -30,6 +30,7 @@ public class BaseITTest {
             switch (resourceType) {
                 case JMXBean: {
                     jmxbean = (JMXBean) context.getBean("jmxbean");
+                    break;
                 }
                 case UserExpireController: {
                     expireController = (UserExpireController) context.getBean("expController");
@@ -41,7 +42,7 @@ public class BaseITTest {
 
     @Rule
     public MethodRule watchman = new TestWatchman() {
-
+        @Override
         public void starting(FrameworkMethod method) {
 
             Annotation[] annotations = method.getAnnotations();

@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.log4j.Logger;
 
 /**
  * Retrieves configuration values from key-value files.
@@ -12,6 +13,8 @@ import org.apache.commons.configuration.PropertiesConfiguration;
  * @author dave00
  */
 public class ConfigurationBean {
+    
+    private static Logger logger = Logger.getLogger(ConfigurationBean.class);
 
     public enum ConfigurationBeanKey {
 
@@ -61,7 +64,7 @@ public class ConfigurationBean {
 
         } catch (ConfigurationException exception) {
 
-            System.err.println(exception);
+            logger.error(exception);
             throw new RuntimeException(exception);
 
         }

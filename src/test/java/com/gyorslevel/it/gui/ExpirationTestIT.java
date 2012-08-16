@@ -1,7 +1,6 @@
 package com.gyorslevel.it.gui;
 
 import com.gyorslevel.configuration.ConfigurationBean;
-import com.gyorslevel.timer.UserExpireController;
 import java.util.concurrent.TimeUnit;
 import junit.framework.Assert;
 import org.junit.*;
