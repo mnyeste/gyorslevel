@@ -38,13 +38,6 @@ public class UserHandlerControllerTest {
     }
     
     @Test
-    public void testNoActiveUserSession()
-    {
-        doReturn(null).when(session).getAttribute("expiration");
-        Assert.assertFalse(controller.userSessionExpired(session));
-    }
-    
-    @Test
     public void testActiveUserInSessionButAlreadyExpired()
     {
         UserExpiration expiration = new UserExpiration("test@localhost");

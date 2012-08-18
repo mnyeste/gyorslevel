@@ -11,7 +11,7 @@ import org.springframework.ui.ModelMap;
  * and session information.
  * @author dave00
  */
-abstract class UserHandlerController extends MyAbstractController {
+public abstract class UserHandlerController extends MyAbstractController {
  
     protected UserExpireController expireController;
     
@@ -22,19 +22,26 @@ abstract class UserHandlerController extends MyAbstractController {
 
     /**
      * @param session
+     * @return true if there is no active user session
+     * expired
+     */
+    protected boolean userSessionMissing(HttpSession session) {
+        UserExpiration expiration = (UserExpiration) session.getAttribute("expiration");
+        return expiration == null;
+    }
+    
+    /**
+     * @param session
      * @return true if there is an active user session but the user was already
      * expired
      */
-    boolean userSessionExpired(HttpSession session) {
+    protected boolean userSessionExpired(HttpSession session) {
         
         UserExpiration expiration = (UserExpiration) session.getAttribute("expiration");
         
-        if (expiration == null)
-        {
-            return false;
-        }
+        final String userEmail = expiration.getUserEmail();
+        final boolean expired = !expireController.userExists(userEmail);
         
-        final boolean expired = !expireController.userExists(expiration.getUserEmail());
         if (expired)
         {
             session.setAttribute("expiration", null);

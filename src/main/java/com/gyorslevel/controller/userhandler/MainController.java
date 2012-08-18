@@ -27,14 +27,16 @@ public class MainController extends UserHandlerController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String process(ModelMap model, HttpServletRequest request) {
-        
+
         HttpSession session = request.getSession();
-        
-        if (userSessionExpired(session))
-        {
-            return "redirect:expired";
+
+        if (!userSessionMissing(session)) {
+            if (userSessionExpired(session)) {
+                return "redirect:expired";
+            }
+
         }
-        
+
         addTitleToModel(model);
         createUserIfMissing(session);
         addUserExpirationToModel(model, session);

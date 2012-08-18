@@ -18,20 +18,31 @@ public class MailController extends UserHandlerController {
     public MailController(UserExpireController expireController) {
         this.expireController = expireController;
     }
-    
-    @RequestMapping(method = RequestMethod.GET)
-    public String process(ModelMap model, HttpServletRequest request, HttpSession session) {
 
-        if (userSessionExpired(session))
-        {
+    @RequestMapping(method = RequestMethod.GET)
+    public String process(ModelMap model, HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+
+        if (userSessionMissing(session)) {
+            return "redirect:index";
+        }
+
+        if (userSessionExpired(session)) {
             return "redirect:expired";
         }
-        
+
+        final String messageId = request.getParameter("id");
+
+        if (messageId == null) {
+            return "redirect:main";
+        }
+
         addTitleToModel(model);
         addUserExpirationToModel(model, session);
-        addEmailMessageToModel(model, session, request.getParameter("id"));
+        addEmailMessageToModel(model, session, messageId);
         addBodyPageNameToModel(model, "mailbody");
-        
+
         return "template";
     }
 
