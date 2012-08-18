@@ -15,7 +15,7 @@
     }
 </script>
 
-<h2 class="pageName">Levelek</h2>
+<h3 class="pageName">Levelek</h3>
 
 <p>
     <c:choose>

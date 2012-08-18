@@ -2,8 +2,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
-<h2><b>Tárgy: </b>${openedMessage.subject}</h2>
-<h3><b>Feladó: </b>${openedMessage.from}</h3>
+<h4><b>Tárgy: </b>${openedMessage.subject}</h4>
+<h4><b>Feladó: </b>${openedMessage.from}</h4>
 
 <p>
     ${openedMessage.message}
