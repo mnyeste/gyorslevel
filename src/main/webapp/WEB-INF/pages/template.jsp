@@ -13,6 +13,7 @@
         <link rel="stylesheet" type="text/css" href="../../actionbutton.css" />
         <link rel="stylesheet" type="text/css" href="../../tabledesign.css" />
         <link rel="stylesheet" type="text/css" href="../../prolificstyle.css" />
+        <script src="../../clipboard.js"></script>
     </head>
     <body>
         <div id="outer">
@@ -86,6 +87,7 @@
                             <div class="box">
                                 <h3>Az Ön gyorslevél címe:&nbsp;</h3>
                                 <p>${expiration.userEmail}</p>
+                                <a class="actionButton" onclick="javascript:copy_to_clipboard('Hello')">Vágólapra másolás (csak IE!)</a>
                             </div>
 
                         </c:if>
