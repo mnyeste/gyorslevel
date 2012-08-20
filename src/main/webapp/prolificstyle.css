@@ -52,7 +52,7 @@ h2 {
 }
 
 h2,h3,h4 {
-	margin-bottom: 1em;
+	margin-bottom: 0.5em;
 	color: #333;
 	font-family: Abel, sans-serif;
 }
@@ -81,11 +81,11 @@ img.aligntop {
 }
 
 p {
-	margin-bottom: 1.75em;
+	margin-bottom: 0.8em;
 }
 
 ul {
-	margin-bottom: 1.75em;
+	margin-bottom: 0.8em;
 }
 
 ul h4 {
@@ -97,7 +97,7 @@ ul {
 }
 
 .box {
-	margin: 0 0 35px 0;
+	margin: 0 0 15px 0;
 	overflow: hidden;
 }
 
