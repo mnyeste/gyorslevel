@@ -30,7 +30,7 @@
                 </div>
                 <div id="header">
                     <div id="logo">
-                        <h1><a href="/index">${title}</a></h1>
+                        <h1><a href="/index"><img src="../../images/logo_beta.png" /></a></h1>
                     </div>
                     <div id="search">
                         <form action="" method="post">

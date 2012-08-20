@@ -141,7 +141,7 @@ ul.list li.first {
 #header {
 	position: relative;
 	padding: 40px;
-	height: 70px;
+	height: 40px;
 	background: #73B05E;
 	color: #FFF;
 	box-shadow: inset 0px -10px 50px 0px #53903E;
@@ -149,8 +149,8 @@ ul.list li.first {
 }
 
 #logo {
-	height: 147px;
-	line-height: 147px;
+	height: 105px;
+	line-height: 120px;
 	left: 40px;
 	bottom: 0;
 	position: absolute;
@@ -170,10 +170,10 @@ ul.list li.first {
 #menu {
 	padding: 0 40px 0 40px;
 	font-family: Abel, sans-serif;
-	line-height: 60px;
+	line-height: 40px;
 	margin: 0;
 	background: #5B874B;
-	height: 60px;
+	height: 40px;
 	width: 1100px;
 	box-shadow: inset 0px -3px 20px 0px #466D37;
 	border-bottom: solid 1px #93D07E;
