@@ -57,9 +57,9 @@
                             <h3>Segíts nekünk!</h3>
                             <img class="alignleft" src="images/support.png" alt="" height="96" width="96"/>
                             <p>
-                                <b>Hibát találtál?</b> Kérünk írd meg nekünk ide: 
-                                <a href="mailto:gyorslevel.info@gmail.com?Subject=Gyorslevél hibabejelentés">
-                                    gyorslevel.info@gmail.com
+                                <b>Hibát találtál?</b> Kérünk írd meg nekünk ide:
+                                <a href="https://docs.google.com/spreadsheet/viewform?formkey=dGE1bkQ4OEN0M2czRldkOFVIR1ZBUEE6MQ#gid=0" class="link">
+                                    Gyorslevél hibabejelentés
                                 </a>
                             </p>                                
                         </div>
