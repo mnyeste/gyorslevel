@@ -2,8 +2,10 @@ package com.gyorslevel.pop3;
 
 import com.gyorslevel.configuration.ConfigurationBean;
 import java.io.*;
+import java.net.InetAddress;
 import java.util.*;
 import javax.mail.*;
+import javax.mail.internet.InternetAddress;
 import org.apache.log4j.Logger;
 import org.springframework.integration.mail.MailReceiver;
 import org.springframework.integration.mail.Pop3MailReceiver;
@@ -72,22 +74,31 @@ public class Pop3EmailFetcher {
             SimpleMessage[] subjects = new SimpleMessage[messages.length];
             
             for (int i = 0; i < messages.length; i++) {
-                final String subject = messages[i].getSubject();
+                
+                final Message message = messages[i];
+                
+                final String subject = message.getSubject();
+                final Address address = message.getFrom()[0];
+                final InternetAddress internetAddress = (InternetAddress) address;
+                
                 // TODO: handle multiple 'from'
-                final String from = messages[i].getFrom()[0].toString();
-                final Date sentDate = messages[i].getSentDate();
+                final String from = internetAddress.getAddress();
+                final Date sentDate = message.getSentDate();
                 final String sentDateStr = sentDate == null ? "" : sentDate.toString();
-                final String content = getContent(messages[i]);
+                final String content = getContent(message);
                 subjects[i] = new SimpleMessage(Integer.toString(i + 1), content, subject, from, sentDateStr);
+                
+                logger.error("-*-*-*-* " + from);
+                
             }
             
             return subjects;
             
         } catch (MessagingException exception) {
-            System.err.println(exception);
+            logger.error(exception);
             throw new RuntimeException(exception);
         } catch (IOException exception) {
-            System.err.println(exception);
+            logger.error(exception);
             throw new RuntimeException(exception);
         }
         
