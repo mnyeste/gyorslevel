@@ -7,7 +7,7 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="description" content="E-mail regisztráció nélkül" />
-        <meta name="keywords" content="e-mail, mail, instant, instant mail" />
+        <meta name="keywords" content="e-mail, mail, instant, instant mail, levél, gyors, gyorslevél, gyorslevel" />
         <title>${title}</title>
         <link href="http://fonts.googleapis.com/css?family=Abel" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="../../actionbutton.css" />
@@ -16,6 +16,16 @@
         <script src="../../clipboard.js"></script>
     </head>
     <body>
+        
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=198050480711";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+            
         <div id="outer">
             <div id="wrapper">
                 <div id="menu">
@@ -32,10 +42,10 @@
                     <div id="logo">
                         <h1><a href="/index"><img src="../../images/logo_beta.png" /></a></h1>
                     </div>
-                    <div id="search">
+                    <div id="facebook">
                         <form action="" method="post">
                             <div>
-                                <input class="form-text" name="search" size="32" maxlength="64" />	
+                                <div class="fb-like" data-href="http://gyorslevel.info/" data-send="true" data-width="225" data-show-faces="true"></div>
                             </div>
                         </form>
                     </div>

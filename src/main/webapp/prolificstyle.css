@@ -226,15 +226,15 @@ ul.list li.first {
 	overflow: hidden;
 }
 
-#search {
+#facebook {
 	bottom: 0;
-	height: 147px;
+	height: 127px;
 	position: absolute;
 	line-height: 147px;
 	right: 40px;
 }
 
-#search input.form-text {
+#facebook input.form-text {
 	border: 0;
 	padding: 9px 40px 9px 9px;
 	background: #5B874B url(images/search.png) top right no-repeat;
