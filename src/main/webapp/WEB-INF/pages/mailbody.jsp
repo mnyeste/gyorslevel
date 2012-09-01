@@ -5,8 +5,8 @@
 <h4><b>Tárgy: </b>${openedMessage.subject}</h4>
 <h4><b>Feladó: </b>${openedMessage.from}</h4>
 
-<p>
-    ${openedMessage.message}
-</p>
+<div>
+    <iframe src="mailmessage?id=${openedMessage.id}" class="mailframe"></iframe>
+</div>
 
 <a class="actionButton" href="/main">Vissza</a>
