@@ -1,25 +1,36 @@
 package com.gyorslevel.pop3;
 
+import com.gyorslevel.pop3.Pop3EmailFetcher.BodyPartDOM;
 import java.io.IOException;
-import java.io.InputStream;
-import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
+import javax.mail.Part;
 import junit.framework.Assert;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.doReturn;
+import static org.powermock.api.mockito.PowerMockito.*;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 
 /**
  * @author dave00
  */
+@PrepareForTest(Pop3EmailFetcher.class)
 @RunWith(PowerMockRunner.class)
 public class Pop3EmailFetcherTest {
+    
+    Pop3EmailFetcher emailFetcher;
+    
+    @Before() 
+    public void setUp() {
+        
+        emailFetcher = new Pop3EmailFetcher();
+        emailFetcher.userName = "user";
+        
+    }
 
     @Test
     public void testTransformTextMessage() throws MessagingException, IOException {
@@ -27,65 +38,66 @@ public class Pop3EmailFetcherTest {
         Message message = mock(Message.class);
         doReturn(true).when(message).isMimeType("text/plain");
         doReturn("My sample text").when(message).getContent();
-        
-        String content = new Pop3EmailFetcher().getContent(message);
+
+        String content = emailFetcher.getContent(message);
         Assert.assertEquals("My sample text", content);
-        
+
+    }
+
+    @Test
+    public void testMultiMailWithInlineImage() throws MessagingException, IOException {
+
+        suppress(method(Pop3EmailFetcher.class, "saveFile"));
+
+        String fileName = "cb.jpg";
+        String contentId = "cid:part1.09070609.08000706@localhost";
+
+        String text = ""
+                + "<html>"
+                + "<head>"
+                + "<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\">"
+                + "</head>"
+                + "<body bgcolor=\"#FFFFFF\" text=\"#000000\">"
+                + "<img alt=\"\" src=\"" + contentId + "\" height=\"417\""
+                + "width=\"625\">"
+                + "</body>"
+                + "</html>";
+
+        Part message = MailMock.newInstance().addStringContent(text).addInputStreamContent(fileName, "<" + contentId + ">").build();
+
+        BodyPartDOM collectBodyParts = emailFetcher.collectBodyParts(message);
+
+        Assert.assertEquals(1, collectBodyParts.mappedFiles.size());
+
+        Assert.assertEquals(String.format("static/%s/%s", "user", fileName), collectBodyParts.mappedFiles.get("cid:"+contentId));
         
     }
     
-    /**
-     * !!!This is ignored because this is already tested in {@link BodyPartDomTest}
-     * @throws MessagingException
-     * @throws IOException 
-     */
-    @Ignore
     @Test
-    public void testNestedContentFetch() throws MessagingException, IOException
-    {
+    public void testMultiMailWithAttachedImage() throws MessagingException, IOException {
         
-        
-        String nestedtextPart = "<html>" +
-            "<head><meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\"></head>"
-                + "<body text=\"#000000\" bgcolor=\"#FFFFFF\">"
-                + "Izeke<br>"
-                + "<img src=\"cid:part1.04030201.02040206@localhost\" alt=\"\"><br>"
-                + "</body>" + 
-            "</html>";
-        
-        BodyPart nestedTextBodyPart = mock(BodyPart.class);
-        doReturn(nestedtextPart).when(nestedTextBodyPart).getContent();
-        
-        InputStream is = mock(InputStream.class);
-        BodyPart nestedInputStreamBodyPart = mock(BodyPart.class);
-        doReturn(is).when(nestedInputStreamBodyPart).getContent();
-        doReturn("proba.png").when(nestedInputStreamBodyPart).getFileName();
-        
-        // Nested multipart
-        Multipart nestedMultipart = mock(Multipart.class);
-        doReturn(2).when(nestedMultipart).getCount();        
-        doReturn(nestedTextBodyPart).when(nestedMultipart).getBodyPart(0);
-        doReturn(nestedInputStreamBodyPart).when(nestedMultipart).getBodyPart(1);
-        
-        BodyPart textBodyPart = mock(BodyPart.class);
-        doReturn("Izeke").when(textBodyPart).getContent();
-        
-        BodyPart nestedMultiPartBodyPart = mock(BodyPart.class);
-        doReturn(nestedMultipart).when(nestedMultiPartBodyPart).getContent();
-        
-        // Main multipart
-        Multipart multipart = mock(Multipart.class);
-        doReturn(2).when(multipart).getCount();
-        doReturn(textBodyPart).when(multipart).getBodyPart(0);
-        doReturn(nestedMultiPartBodyPart).when(multipart).getBodyPart(1);
-        
-        // MimeMessage
-        Message message = mock(Message.class);
-        doReturn(true).when(message).isMimeType("multipart/related");
-        doReturn(multipart).when(message).getContent();
-        
-        Assert.assertEquals("Izeke"+nestedtextPart, new Pop3EmailFetcher().getContent(message));
-        
+        suppress(method(Pop3EmailFetcher.class, "saveFile"));
+
+        String fileName = "cb.jpg";
+
+        String text = ""
+                + "<html>"
+                + "<head>"
+                + "<meta http-equiv=\"content-type\" content=\"text/html; charset=ISO-8859-1\">"
+                + "</head>"
+                + "<body bgcolor=\"#FFFFFF\" text=\"#000000\">"
+                + "Sample content"
+                + "</body>"
+                + "</html>";
+
+        Part message = MailMock.newInstance().addStringContent(text).addInputStreamAttachment(fileName).build();
+
+        BodyPartDOM collectBodyParts = emailFetcher.collectBodyParts(message);
+
+        Assert.assertEquals(1, collectBodyParts.attachedFiles.size());
+
+        Assert.assertEquals(String.format("static/%s/%s", "user", fileName), collectBodyParts.attachedFiles.get(fileName));
         
     }
+    
 }

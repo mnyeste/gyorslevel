@@ -2,7 +2,6 @@ package com.gyorslevel.pop3;
 
 import com.gyorslevel.configuration.ConfigurationBean;
 import java.io.*;
-import java.net.InetAddress;
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -18,7 +17,19 @@ import org.springframework.integration.mail.Pop3MailReceiver;
 public class Pop3EmailFetcher {
 
     private static Logger logger = Logger.getLogger(Pop3EmailFetcher.class);
-    private String userName;
+    String userName;
+
+    private void saveFile(InputStream is, final String contextFolder, final String fileName) throws FileNotFoundException, IOException {
+        File f = new File(contextFolder + "/" + userName + "/" + fileName);
+        OutputStream out = new FileOutputStream(f);
+        byte buf[] = new byte[1024];
+        int len;
+        while ((len = is.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        out.close();
+        is.close();
+    }
 
     /**
      * Represents the elements a parsed MimeMessage. Items contained can be type
@@ -45,17 +56,19 @@ public class Pop3EmailFetcher {
         List<MyBodyPart> bodyParts = new ArrayList<MyBodyPart>();
         // Content-ID:Filename
         Map<String, String> mappedFiles = new HashMap<String, String>();
+        // Filename:Path
+        Map<String, String> attachedFiles = new HashMap<String, String>();
 
         String processBodyParts(boolean html) {
 
             StringBuilder builder = new StringBuilder();
 
             for (MyBodyPart bodyPart : bodyParts) {
-                
+
                 if (html != bodyPart.html) {
                     continue;
                 }
-                
+
                 Iterator<String> iterator = mappedFiles.keySet().iterator();
 
                 String part = bodyPart.text;
@@ -145,7 +158,7 @@ public class Pop3EmailFetcher {
 
     }
 
-    private BodyPartDOM collectBodyParts(Part part) throws IOException, MessagingException {
+    BodyPartDOM collectBodyParts(Part part) throws IOException, MessagingException {
 
         BodyPartDOM dom = new BodyPartDOM();
 
@@ -182,6 +195,7 @@ public class Pop3EmailFetcher {
                 BodyPartDOM subDom = collectBodyParts(innerBodyPart);
                 dom.bodyParts.addAll(subDom.bodyParts);
                 dom.mappedFiles.putAll(subDom.mappedFiles);
+                dom.attachedFiles.putAll(subDom.attachedFiles);
 
             }
 
@@ -196,22 +210,22 @@ public class Pop3EmailFetcher {
                 throw new RuntimeException("");
             }
 
-            final String contentId = part.getHeader("Content-ID")[0].replaceAll("<", "").replaceAll(">", "");
+            String contentId = null;
 
-            logger.debug("handleBodyPart() - Found nested InputStream content. FileName: " + fileName + " Content-ID: " + contentId + " Context Folder: " + contextFolder);
+            final String[] headers = part.getHeader("Content-ID");
 
-            InputStream is = (InputStream) content;
-            File f = new File(contextFolder + "/" + userName + "/" + fileName);
-            OutputStream out = new FileOutputStream(f);
-            byte buf[] = new byte[1024];
-            int len;
-            while ((len = is.read(buf)) > 0) {
-                out.write(buf, 0, len);
+            if (headers != null && headers.length >= 1 && headers[0] != null) {
+                contentId = headers[0].replaceAll("<", "").replaceAll(">", "");
             }
-            out.close();
-            is.close();
 
-            dom.mappedFiles.put("cid:" + contentId, mailImagesFolder + "/" + userName + "/" + fileName);
+            logger.debug("handleBodyPart() - Found nested InputStream content. FileName: " + fileName + " Context Folder: " + contextFolder + " Content-ID: " + contentId);
+            saveFile((InputStream) content, contextFolder, fileName);
+
+            if (contentId == null) {
+                dom.attachedFiles.put(fileName, mailImagesFolder + "/" + userName + "/" + fileName);
+            } else {
+                dom.mappedFiles.put("cid:" + contentId, mailImagesFolder + "/" + userName + "/" + fileName);
+            }
 
         }
 
