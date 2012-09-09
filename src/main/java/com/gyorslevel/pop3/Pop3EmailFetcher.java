@@ -104,7 +104,7 @@ public class Pop3EmailFetcher {
 
             final Message[] messages = receiver.receive();
 
-            SimpleMessage[] subjects = new SimpleMessage[messages.length];
+            SimpleMessage[] simpleMessages = new SimpleMessage[messages.length];
 
             for (int i = 0; i < messages.length; i++) {
 
@@ -118,14 +118,29 @@ public class Pop3EmailFetcher {
                 final String from = internetAddress.getAddress();
                 final Date sentDate = message.getSentDate();
                 final String sentDateStr = sentDate == null ? "" : sentDate.toString();
-                final String content = getContent(message);
-                subjects[i] = new SimpleMessage(Integer.toString(i + 1), content, subject, from, sentDateStr);
-
-                logger.error("-*-*-*-* " + from);
+                
+                String content;
+                
+                // TODO: attachments for plain text mails...
+                
+                if (message.isMimeType("text/plain") || message.isMimeType("text/html")) {
+                    
+                    content = (String) message.getContent();
+                    
+                    simpleMessages[i] = new SimpleMessage(Integer.toString(i + 1), content, subject, from, sentDateStr);
+                    
+                } else {
+                    
+                    BodyPartDOM dom = getContent(message);
+                    content = dom.processBodyParts(true);
+                    
+                    simpleMessages[i] = new SimpleMessage(Integer.toString(i + 1), content, subject, from, sentDateStr, dom.attachedFiles);
+                    
+                }
 
             }
 
-            return subjects;
+            return simpleMessages;
 
         } catch (MessagingException exception) {
             logger.error(exception);
@@ -137,23 +152,12 @@ public class Pop3EmailFetcher {
 
     }
 
-    String getContent(Message message) throws MessagingException, IOException {
+    BodyPartDOM getContent(Message message) throws MessagingException, IOException {
 
-        logger.debug(message.getClass().getName());
-
-        if (message.isMimeType("text/plain") || message.isMimeType("text/html")) {
-
-            return (String) message.getContent();
-
-        } else if (message.isMimeType("multipart/related") || message.isMimeType("multipart/mixed") || message.isMimeType("multipart/alternative")) {
-
-            BodyPartDOM dom = collectBodyParts(message);
-            return dom.processBodyParts(true);
-
+        if (message.isMimeType("multipart/related") || message.isMimeType("multipart/mixed") || message.isMimeType("multipart/alternative")) {
+            return collectBodyParts(message);
         } else {
-
             throw new UnsupportedOperationException("Not yet implemented:" + message.getContentType());
-
         }
 
     }
