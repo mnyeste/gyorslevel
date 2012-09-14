@@ -43,6 +43,10 @@
                     <div id="logo">
                         <h1><a href="/index"><img src="../../images/logo_beta.png" /></a></h1>
                     </div>
+                    <div id="banner">
+                        <h1><a href="mailto:gyorslevel.info@gmail.com?subject=Reklám ajánlat" target="_blank">Ez itt a reklám helye</a></h1>
+                        <h3><a href="mailto:gyorslevel.info@gmail.com?subject=Reklám ajánlat" target="_blank">Tényleg. Írjon nekünk!</a></h3>
+                    </div>
                     <div id="facebook">
                         <form action="" method="post">
                             <div>
@@ -58,6 +62,7 @@
                             <p>
                                 <ul class="list">
                                     <li>Ideiglenes e-mail, regisztráció nélkül!</li>
+                                    <li><b>Csak 10 percre!</b></li>
                                     <li>Fogadj leveleket majd felejtsd el!</li>
                                     <li>Nincs spam!</li>
                                 </ul>
@@ -69,7 +74,7 @@
                             <img class="alignleft" src="images/support.png" alt="" height="96" width="96"/>
                             <p>
                                 <b>Hibát találtál?</b> Kérünk írd meg nekünk ide:
-                                <a href="https://docs.google.com/spreadsheet/viewform?formkey=dGE1bkQ4OEN0M2czRldkOFVIR1ZBUEE6MQ#gid=0" class="link">
+                                <a href="https://docs.google.com/spreadsheet/viewform?formkey=dGE1bkQ4OEN0M2czRldkOFVIR1ZBUEE6MQ#gid=0" class="link"  target="_blank">
                                     Gyorslevél hibabejelentés
                                 </a>
                             </p>                                

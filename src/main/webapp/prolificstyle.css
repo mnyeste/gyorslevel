@@ -148,6 +148,30 @@ ul.list li.first {
 	overflow: hidden;
 }
 
+#banner {
+	height: 100px;
+	left: 360px;
+	bottom: 0;
+	position: absolute;
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        padding: 0px;
+}
+
+#banner a {
+    text-decoration: none;
+}
+
+#banner h1 {
+	font-family: Abel, sans-serif;
+	font-size: 3.5em;
+        margin: 10px 0px 10px 0px;
+        color: #FFF;
+}
+
+#banner h3 {
+	margin: 10px 0px 10px 5px;
+}
+
 #logo {
 	height: 105px;
 	line-height: 120px;
