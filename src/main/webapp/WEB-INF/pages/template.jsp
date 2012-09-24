@@ -30,7 +30,7 @@
         </script>
     </head>
     <body>
-        
+
         <div id="fb-root"></div>
         <script>(function(d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
@@ -39,7 +39,7 @@
             js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=198050480711";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
-            
+
         <div id="outer">
             <div id="wrapper">
                 <div id="menu">
@@ -83,14 +83,37 @@
                         </div>
 
                         <div class="box">
-                            <h3>Segíts nekünk!</h3>
-                            <img class="alignleft" src="images/support.png" alt="" height="96" width="96"/>
+                            <h3>Segíts nekünk!</h3>                            
+                            <table>
+                                <tr>
+                                    <td>
+                                        <img src="images/support.png" alt="" height="75" width="75"/>
+                                    </td>
+                                    <td>
+                                        <p>
+                                            <b>Hibát találtál?</b><br />
+                                            Kérünk írd meg nekünk ide:<br />
+                                            <a href="https://docs.google.com/spreadsheet/viewform?formkey=dGE1bkQ4OEN0M2czRldkOFVIR1ZBUEE6MQ#gid=0" class="link"  target="_blank">
+                                                Gyorslevél hibabejelentés
+                                            </a>
+                                        </p>                                
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="box">
+                            <h3>Így használd a szolgáltatásunk</h3>
+
                             <p>
-                                <b>Hibát találtál?</b> Kérünk írd meg nekünk ide:
-                                <a href="https://docs.google.com/spreadsheet/viewform?formkey=dGE1bkQ4OEN0M2czRldkOFVIR1ZBUEE6MQ#gid=0" class="link"  target="_blank">
-                                    Gyorslevél hibabejelentés
-                                </a>
-                            </p>                                
+                                <ul class="list">
+                                    <li>1.) Kattints az "Új fiók" gombra</li>                                        
+                                    <li>2.) Másold ki a generált gyorslevél címed</li>
+                                    <li>3.) Használd ezt például egy regisztrációhoz</li>
+                                    <li>4.) Várj amíg a leveled megérkezik</li>
+                                </ul>
+                            </p>                             
+
                         </div>
 
                         <!--
@@ -128,20 +151,13 @@
                         </div>
 
                         <div class="box">
-                            <h3>Így használd a szolgáltatásunk</h3>
-                            <img class="alignleft" src="images/howto.png" alt="" height="96" width="96"/>                                
-                            <p>
-                                <ol>
-                                    <li class="first">Kattints az "Új fiók" gombra</li>                                        
-                                    <li>Jegyezd meg (másold ki) a generált gyorslevél címed</li>
-                                    <li>Használd ezt például egy regisztrációhoz</li>
-                                    <li class="last">Várj amíg a leveled megérkezik</li>
-                                </ol>
-                            </p>
+                            <br />
+                            <script src="http://adchange.hu/show.php?g=r:735,f:f,c:d,t:" type="text/javascript"></script>
                         </div>
-                            
+
+
                         <br class="clearfix" />
-                        
+
                     </div>
                     <br class="clearfix" />
                 </div>
