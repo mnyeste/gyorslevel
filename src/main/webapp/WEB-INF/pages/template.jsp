@@ -151,8 +151,8 @@
                         </div>
 
                         <div class="box">
-                            <br />
-                            <script src="http://adchange.hu/show.php?g=r:735,f:f,c:d,t:" type="text/javascript"></script>
+                            <br />                            
+                            <script src="http://adchange.hu/show.php?g=r:735,f:f,c:d,t:7" type="text/javascript"></script>
                         </div>
 
 
