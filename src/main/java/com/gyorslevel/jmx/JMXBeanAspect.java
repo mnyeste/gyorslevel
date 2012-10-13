@@ -1,8 +1,10 @@
 package com.gyorslevel.jmx;
 
+import com.gyorslevel.RetriableTask;
 import com.gyorslevel.configuration.ConfigurationBean;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.concurrent.Callable;
 import javax.annotation.PostConstruct;
 import javax.management.JMX;
 import javax.management.MBeanServerConnection;
@@ -68,12 +70,29 @@ public class JMXBeanAspect {
 
     private void connectToJMX(JMXBean jmxBean) throws MalformedObjectNameException, IOException, MalformedURLException {
 
-        String jamesHost = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.JamesHost, String.class);
+        final String jamesHost = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.JamesHost, String.class);
 
-        JMXServiceURL url = new JMXServiceURL(
+        final JMXServiceURL url = new JMXServiceURL(
                 "service:jmx:rmi:///jndi/rmi://" + jamesHost + ":9999/jmxrmi");
+        
+        Callable<JMXConnector> task = new Callable<JMXConnector>() {
+            @Override
+            public JMXConnector call() throws Exception {
+                JMXConnector jmxc = JMXConnectorFactory.connect(url, null);
+                return jmxc;
+            }
+        };
 
-        JMXConnector jmxc = JMXConnectorFactory.connect(url, null);
+        JMXConnector jmxc;
+        
+        // TODO: parameterek
+        RetriableTask<JMXConnector> r = new RetriableTask<JMXConnector>(3, 30000, task);
+        try {
+            jmxc = r.call();
+        } catch (Exception e) {
+            logger.error(e);            
+            throw new RuntimeException(e);
+        }
 
         MBeanServerConnection mbsc = jmxc.getMBeanServerConnection();
 
