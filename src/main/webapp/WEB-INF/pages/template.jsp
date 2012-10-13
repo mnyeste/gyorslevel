@@ -31,15 +31,6 @@
     </head>
     <body>
 
-        <div id="fb-root"></div>
-        <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=198050480711";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
-
         <div id="outer">
             <div id="wrapper">
                 <div id="menu">
@@ -61,11 +52,7 @@
                         <h3><a href="mailto:gyorslevel.info@gmail.com?subject=Reklám ajánlat" target="_blank">Tényleg. Írjon nekünk!</a></h3>
                     </div>
                     <div id="facebook">
-                        <form action="" method="post">
-                            <div>
-                                <div class="fb-like" data-href="http://gyorslevel.info/" data-send="true" data-width="225" data-show-faces="true"></div>
-                            </div>
-                        </form>
+                        <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fgyorslevel&amp;send=false&amp;layout=standard&amp;width=300&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35&amp;appId=198050480711" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:35px;" allowTransparency="true"></iframe>
                     </div>
                 </div>
                 <div id="page">
@@ -116,21 +103,6 @@
 
                         </div>
 
-                        <!--
-                        <div class="box">
-                            <h3>Mire való a gyorslevél?</h3>
-                            <ul class="list">
-                                <li class="first"><a href="#">Aliquam sapien aliquam</a></li>
-                                <li><a href="#">Ipsum ipsum ac venenatis</a></li>
-                                <li><a href="#">Dolor ut non etiam</a></li>
-                                <li><a href="#">Tempus ante integer vivamus</a></li>
-                                <li><a href="#">Montes interdum sed parturient</a></li>
-                                <li><a href="#">Velit malesuada accumsan</a></li>
-                                <li><a href="#">Amet suscipit ornare tempor</a></li>
-                                <li class="last"><a href="#">Ante mauris sodales</a></li>
-                            </ul>
-                        </div>
-                        -->
                     </div>
                     <div id="content">
 

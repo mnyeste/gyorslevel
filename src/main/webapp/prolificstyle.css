@@ -256,6 +256,7 @@ ul.list li.first {
 	position: absolute;
 	line-height: 147px;
 	right: 40px;
+        z-index: 1;
 }
 
 #facebook input.form-text {
