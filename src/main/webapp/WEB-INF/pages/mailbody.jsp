@@ -4,14 +4,18 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<h4><b>Tárgy: </b>${openedMessage.subject}</h4>
-<h4><b>Feladó: </b>${openedMessage.from}</h4>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setBundle basename="com.gyorslevel.dict" />
+
+<h4><b><fmt:message key="mailpage.message.subject" />&nbsp;</b>${openedMessage.subject}</h4>
+<h4><b><fmt:message key="mailpage.message.sender" />&nbsp;</b>${openedMessage.from}</h4>
 
 <div>
     <iframe src="mailmessage?id=${openedMessage.id}" class="mailframe"></iframe>
 </div>
 
-<h3>Csatolmányok</h3>
+<h3><fmt:message key="mailpage.message.attachments" /></h3>
 <p>
     <c:if test="${not empty openedMessage.attachedFiles}">
 
@@ -19,8 +23,8 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Fájlnév</th>
-                        <th>Link</th>
+                        <th><fmt:message key="mailpage.table.files.header.filename" /></th>
+                        <th><fmt:message key="mailpage.table.files.header.link" /></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,7 +32,7 @@
                 <c:forEach var="attachedFile" items="${openedMessage.attachedFiles}" varStatus="lineInfo">
                     <tr class="<c:out value="${(lineInfo.index % 2)==0?'alt':''}"/>">
                         <td>${attachedFile.key}</td>
-                        <td><a href="${attachedFile.value}" target="_blank">Megnyitás / Letöltés</a></td>
+                        <td><a href="${attachedFile.value}" target="_blank"><fmt:message key="mailpage.table.files.message.open" /></a></td>
                     </tr>
                 </c:forEach>
 
@@ -39,4 +43,4 @@
     </c:if>
 </p>
 
-<a class="actionButton" href="/main">Vissza</a>
+<a class="actionButton" href="/main"><fmt:message key="mailpage.button.back" /></a>

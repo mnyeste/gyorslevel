@@ -30,7 +30,6 @@ public class LogOutController extends MyAbstractController {
         
         HttpSession session = request.getSession();
         
-        addTitleToModel(model);
         invalidateSession(session);
         addBodyPageNameToModel(model, "indexbody");
         addVersionToSession(request);

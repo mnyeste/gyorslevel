@@ -3,6 +3,11 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setBundle basename="com.gyorslevel.dict" />
+
 <%@page import="java.io.File" %>
 <script type="text/javascript">
     window.onload = setupRefresh;
@@ -15,12 +20,12 @@
     }
 </script>
 
-<h3 class="pageName">Levelek</h3>
+<h3 class="pageName"><fmt:message key="mainpage.pageName" /></h3>
 
 <p>
     <c:choose>
         <c:when test="${empty messages}">
-            <c:out value="Nincs olvasatlan levél" />
+            <fmt:message key="mainpage.message.nounread" />
         </c:when>
         <c:otherwise>
 
@@ -28,9 +33,9 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Tárgy</th>
-                        <th>Feladó</th>
-                        <th>Dátum</th>
+                        <th><fmt:message key="mainpage.table.mails.header.subject" /></th>
+                        <th><fmt:message key="mainpage.table.mails.header.sender" /></th>
+                        <th><fmt:message key="mainpage.table.mails.header.date" /></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,4 +57,4 @@
 </c:choose>
 </p>
 
-<a class="actionButton" href="/logout">Kilépés</a>
+<a class="actionButton" href="/logout"><fmt:message key="mainpage.button.logout" /></a>

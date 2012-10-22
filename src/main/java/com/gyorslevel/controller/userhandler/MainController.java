@@ -37,7 +37,6 @@ public class MainController extends UserHandlerController {
 
         }
 
-        addTitleToModel(model);
         createUserIfMissing(session);
         addUserExpirationToModel(model, session);
         addFetchedMails(model, session);

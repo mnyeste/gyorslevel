@@ -2,13 +2,16 @@
 <!DOCTYPE html>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<fmt:setBundle basename="com.gyorslevel.dict" />
 
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <meta name="description" content="E-mail regisztráció nélkül" />
-        <meta name="keywords" content="e-mail, mail, instant, instant mail, levél, gyors, gyorslevél, gyorslevel" />
-        <title>${title}</title>
+        <meta name="description" content="<fmt:message key="template.meta.description" />" />
+        <meta name="keywords" content="<fmt:message key="template.meta.keywords" />" />
+        <title><fmt:message key="template.title" /></title>
         <link href="http://fonts.googleapis.com/css?family=Abel" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="../../actionbutton.css" />
         <link rel="stylesheet" type="text/css" href="../../tabledesign.css" />
@@ -35,7 +38,7 @@
             <div id="wrapper">
                 <div id="menu">
                     <ul>
-                        <li class="first"><a href="/index">Levelek!</a></li>
+                        <li class="first"><a href="/index"><fmt:message key="template.menu.mails" />!</a></li>
                         <!--
                         <li><a href="/index">About</a></li>
                         <li class="last"><a href="/index">Contact</a></li>
@@ -48,8 +51,8 @@
                         <h1><a href="/index"><img src="../../images/logo_beta.png" /></a></h1>
                     </div>
                     <div id="banner">
-                        <h1><a href="mailto:gyorslevel.info@gmail.com?subject=Reklám ajánlat" target="_blank">Ez itt a reklám helye</a></h1>
-                        <h3><a href="mailto:gyorslevel.info@gmail.com?subject=Reklám ajánlat" target="_blank">Tényleg. Írjon nekünk!</a></h3>
+                        <h1><a href="mailto:gyorslevel.info@gmail.com?subject=<fmt:message key="template.ad.contact.subject" />" target="_blank"><fmt:message key="template.ad.contact.line1" /></a></h1>
+                        <h3><a href="mailto:gyorslevel.info@gmail.com?subject=<fmt:message key="template.ad.contact.subject" />" target="_blank"><fmt:message key="template.ad.contact.line2" /></a></h3>
                     </div>
                     <div id="facebook">
                         <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fgyorslevel&amp;send=false&amp;layout=standard&amp;width=300&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35&amp;appId=198050480711" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:35px;" allowTransparency="true"></iframe>
@@ -58,19 +61,19 @@
                 <div id="page">
                     <div id="sidebar">
                         <div class="box">
-                            <h3>Mire való a gyorslevél?</h3>
+                            <h3><fmt:message key="template.box.faq.title" /></h3>
                             <p>
                                 <ul class="list">
-                                    <li>Ideiglenes e-mail, regisztráció nélkül!</li>
-                                    <li><b>Csak 10 percre!</b></li>
-                                    <li>Fogadj leveleket majd felejtsd el!</li>
-                                    <li>Nincs spam!</li>
+                                    <li><fmt:message key="template.box.faq.line1" /></li>
+                                    <li><b><fmt:message key="template.box.faq.line2" /></b></li>
+                                    <li><fmt:message key="template.box.faq.line3" /></li>
+                                    <li><fmt:message key="template.box.faq.line4" /></li>
                                 </ul>
                             </p>
                         </div>
 
                         <div class="box">
-                            <h3>Segíts nekünk!</h3>                            
+                            <h3><fmt:message key="template.box.help.title" /></h3>                            
                             <table>
                                 <tr>
                                     <td>
@@ -78,10 +81,10 @@
                                     </td>
                                     <td>
                                         <p>
-                                            <b>Hibát találtál?</b><br />
-                                            Kérünk írd meg nekünk ide:<br />
+                                            <b><fmt:message key="template.box.help.line1" /></b><br />
+                                            <fmt:message key="template.box.help.line2" />:<br />
                                             <a href="https://docs.google.com/spreadsheet/viewform?formkey=dGE1bkQ4OEN0M2czRldkOFVIR1ZBUEE6MQ#gid=0" class="link"  target="_blank">
-                                                Gyorslevél hibabejelentés
+                                                <fmt:message key="template.box.help.line3" />
                                             </a>
                                         </p>                                
                                     </td>
@@ -90,14 +93,14 @@
                         </div>
 
                         <div class="box">
-                            <h3>Így használd a szolgáltatásunk</h3>
+                            <h3><fmt:message key="template.box.howto.title" /></h3>
 
                             <p>
                                 <ul class="list">
-                                    <li>1.) Kattints az "Új fiók" gombra</li>                                        
-                                    <li>2.) Másold ki a generált gyorslevél címed</li>
-                                    <li>3.) Használd ezt például egy regisztrációhoz</li>
-                                    <li>4.) Várj amíg a leveled megérkezik</li>
+                                    <li><fmt:message key="template.box.howto.line1" /></li>                                        
+                                    <li><fmt:message key="template.box.howto.line2" /></li>                                        
+                                    <li><fmt:message key="template.box.howto.line3" /></li>                                        
+                                    <li><fmt:message key="template.box.howto.line4" /></li>                                        
                                 </ul>
                             </p>                             
 
@@ -109,9 +112,9 @@
                         <c:if test="${not empty expiration.userEmail}">
 
                             <div class="box">
-                                <h3>Az Ön gyorslevél címe:&nbsp;</h3>
+                                <h3><fmt:message key="template.mailaddress.title" />:&nbsp;</h3>
                                 <p>${expiration.userEmail}</p>
-                                <a class="actionButton" onclick="javascript:copy_to_clipboard('Hello')">Vágólapra másolás (csak IE!)</a>
+                                <a class="actionButton" onclick="javascript:copy_to_clipboard('')"><fmt:message key="template.mailaddress.copy" /></a>
                             </div>
 
                         </c:if>
@@ -138,7 +141,7 @@
                 </div>
             </div>
             <div id="footer">
-                &copy; 2012 gyorslevel | Minden jog fenntartva! | Design by <a href="http://www.freecsstemplates.org/">FCT</a> | Images by <a href="http://fotogrph.com/">Fotogrph</a> | Version: <c:out value="${sessionScope.applicationVersion}"/>
+                &copy; 2012 gyorslevel | <fmt:message key="template.footer.allrightsreserved" /> | Design by <a href="http://www.freecsstemplates.org/">FCT</a> | Images by <a href="http://fotogrph.com/">Fotogrph</a> | Version: <c:out value="${sessionScope.applicationVersion}"/>
             </div>
         </div>
     </body>

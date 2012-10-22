@@ -38,7 +38,6 @@ public class MailController extends UserHandlerController {
             return "redirect:main";
         }
 
-        addTitleToModel(model);
         addUserExpirationToModel(model, session);
         addEmailMessageToModel(model, session, messageId);
         addBodyPageNameToModel(model, "mailbody");

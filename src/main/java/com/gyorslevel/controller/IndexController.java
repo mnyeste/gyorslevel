@@ -35,7 +35,6 @@ public class IndexController extends UserHandlerController {
 
         }
 
-        addTitleToModel(model);
         addBodyPageNameToModel(model, "indexbody");
         addContextFolderToConfiguration(request);
         addVersionToSession(request);

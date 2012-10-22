@@ -20,7 +20,6 @@ public class AdminController extends MyAbstractController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String process(ModelMap model) {
-        addTitleToModel(model);
         addUserEmailsToModel(model);
         addBodyPageNameToModel(model, "adminbody");
         return "template";

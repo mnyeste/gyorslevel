@@ -1,7 +1,6 @@
 function copy_to_clipboard(text) {
     if (window.clipboardData) {
         window.clipboardData.setData('text', text);
-        alert('Szöveg kimásolva:'+text);
     } else {
         var clipboarddiv = document.getElementById('divclipboardswf');
         if (!clipboarddiv) {
