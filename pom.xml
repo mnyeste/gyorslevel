@@ -170,6 +170,13 @@
 	</dependencies>
 
 	<build>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<finalName>gyorslevel</finalName>
 		<pluginManagement>
 			<plugins>
@@ -201,12 +208,12 @@
 					<artifactId>maven-war-plugin</artifactId>
 					<version>2.1.1</version>
 					<configuration>
-							<archive>
-								<manifest>
-									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-								</manifest>
-							</archive>
-						</configuration>
+						<archive>
+							<manifest>
+								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+						</archive>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -314,7 +321,19 @@
 			</build>
 		</profile>
 		<profile>
+			<id>dev-env</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<log.level>DEBUG</log.level>
+			</properties>
+		</profile>
+		<profile>
 			<id>release</id>
+			<properties>
+				<log.level>INFO</log.level>
+			</properties>
 			<build>
 				<plugins>
 					<plugin>
