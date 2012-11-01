@@ -327,6 +327,11 @@
 			</activation>
 			<properties>
 				<log.level>DEBUG</log.level>
+				<config.gyorslevel.domain>localhost</config.gyorslevel.domain>
+				<config.expiration.timeout>30000</config.expiration.timeout>
+				<config.james.host>localhost</config.james.host>
+				<config.context.folder>${jetty.static.path}</config.context.folder>
+				<config.mode>dev</config.mode>			
 			</properties>
 		</profile>
 		<profile>
