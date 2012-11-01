@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
  * @author dave00
  */
 public class ConfigurationBean {
-    
+
     private static Logger logger = Logger.getLogger(ConfigurationBean.class);
 
     public enum ConfigurationBeanKey {
@@ -48,34 +48,47 @@ public class ConfigurationBean {
             throw new IllegalArgumentException();
         }
 
-        try {
+        Configuration config = getConfiguration();
 
-            Configuration config = new PropertiesConfiguration("/etc/gyorslevel/gyorslevel.cfg");
-
-            switch (key) {
-                case ContextFolder:
-                case JamesHost:
-                case Domain:
-                case Mode:
-                    return type.cast(config.getString(key.getKey()));
-                case TimeOut:
-                    return type.cast(config.getLong(key.getKey()));
-                default:
-                    throw new MissingConfigurationEntry(key.getKey());
-            }
-
-        } catch (ConfigurationException exception) {
-
-            logger.error(exception);
-            throw new RuntimeException(exception);
-
+        switch (key) {
+            case ContextFolder:
+            case JamesHost:
+            case Domain:
+            case Mode:
+                return type.cast(config.getString(key.getKey()));
+            case TimeOut:
+                return type.cast(config.getLong(key.getKey()));
+            default:
+                throw new MissingConfigurationEntry(key.getKey());
         }
 
     }
-    
-    public static void setValue(String key, Object value)
-    {
+
+    public static void setValue(String key, Object value) {
         configValues.put(key, value);
     }
-    
+
+    private static Configuration getConfiguration() {
+
+        final String[] places = new String[]
+        {
+            "gyorslevel.conf",
+            "/etc/gyorslevel/gyorslevel.conf"
+        };
+        
+        Configuration config = null;
+        
+        for (String place : places) {
+            try {
+                config = new PropertiesConfiguration(place);
+                return config;
+            } catch (ConfigurationException exception) {
+                logger.info("Config file cannot be found at: " + place);
+            }
+        }
+
+        logger.error("Configuration file missing!");
+        throw new RuntimeException("Configuration file missing!");
+        
+    }
 }

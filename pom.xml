@@ -21,6 +21,11 @@
 		<jetty.static.path>${project.build.directory}/static</jetty.static.path>
 		<version.major>1</version.major>
 		<version.minor>0</version.minor>
+                <config.gyorslevel.domain>localhost</config.gyorslevel.domain>
+                <config.expiration.timeout>30000</config.expiration.timeout>
+                <config.james.host>localhost</config.james.host>
+                <config.context.folder>${jetty.static.path}</config.context.folder>
+                <config.mode>dev</config.mode>		                
 	</properties>
 
 
@@ -319,6 +324,9 @@
 					</plugin>
 				</plugins>
 			</build>
+                        <properties>
+                            <log.level>DEBUG</log.level>
+                        </properties>
 		</profile>
 		<profile>
 			<id>dev-env</id>
@@ -326,12 +334,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<log.level>DEBUG</log.level>
-				<config.gyorslevel.domain>localhost</config.gyorslevel.domain>
-				<config.expiration.timeout>30000</config.expiration.timeout>
-				<config.james.host>localhost</config.james.host>
-				<config.context.folder>${jetty.static.path}</config.context.folder>
-				<config.mode>dev</config.mode>			
+				<log.level>DEBUG</log.level>	
 			</properties>
 		</profile>
 		<profile>
@@ -368,6 +371,7 @@
 									<Implementation-Version>${version.major}.${version.minor}-${buildNumber}</Implementation-Version>
 								</manifestEntries>
 							</archive>
+                                                        <packagingExcludes>**/*.conf</packagingExcludes>
 						</configuration>
 					</plugin>
 
