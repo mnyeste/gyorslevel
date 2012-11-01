@@ -23,25 +23,18 @@ public class ExpirationTestIT extends AbstractGUITestIT {
 
     @Test
     public void testExpired() throws Exception {
-
+        
         // Open index page
         openUrl("index");
-
         // Login
         driver.findElement(By.name("login")).click();
-
         // Check if main page is opened
-        Assert.assertEquals("Levelek", driver.findElement(By.cssSelector(".pageName")).getText());
-
+        Assert.assertEquals(getLocaleText("template.menu.mails"), driver.findElement(By.cssSelector(".pageName")).getText());
         long timeOut = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.TimeOut, Long.class);
-        
         Thread.sleep(TimeUnit.MILLISECONDS.convert((timeOut/1000) + 5, TimeUnit.SECONDS));
-
         openUrl("main");
-
         // Check if now we on the expired page
-        Assert.assertEquals("Időtúllépés", driver.findElement(By.cssSelector(".pageName")).getText());
-        
+        Assert.assertEquals(getLocaleText("expirepage.pageName"), driver.findElement(By.cssSelector(".pageName")).getText());
         Thread.sleep(10000);
 
     }

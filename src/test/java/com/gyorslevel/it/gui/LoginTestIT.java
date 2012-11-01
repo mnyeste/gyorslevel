@@ -26,7 +26,7 @@ public class LoginTestIT extends AbstractGUITestIT {
     public void testLogin() throws Exception {
         openUrl("index");
         driver.findElement(By.name("login")).click();
-        Assert.assertEquals("Levelek", driver.findElement(By.cssSelector(".pageName")).getText());
+        Assert.assertEquals(getLocaleText("template.menu.mails"), driver.findElement(By.cssSelector(".pageName")).getText());
     }
           
 }

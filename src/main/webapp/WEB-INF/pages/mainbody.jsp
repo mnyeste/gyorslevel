@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="com.gyorslevel.dict" />
 
 <%@page import="java.io.File" %>

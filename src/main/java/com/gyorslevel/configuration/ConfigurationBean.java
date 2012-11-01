@@ -21,7 +21,8 @@ public class ConfigurationBean {
         Domain("gyorslevel.domain", String.class),
         TimeOut("expiration.timeout", Long.class),
         ContextFolder("context.folder", String.class),
-        JamesHost("james.host", String.class);
+        JamesHost("james.host", String.class),
+        Mode("mode", String.class);
         private String key;
         private Class type;
 
@@ -55,6 +56,7 @@ public class ConfigurationBean {
                 case ContextFolder:
                 case JamesHost:
                 case Domain:
+                case Mode:
                     return type.cast(config.getString(key.getKey()));
                 case TimeOut:
                     return type.cast(config.getLong(key.getKey()));

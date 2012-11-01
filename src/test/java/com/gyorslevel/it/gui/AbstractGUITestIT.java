@@ -1,8 +1,11 @@
 package com.gyorslevel.it.gui;
 
 import com.gyorslevel.configuration.ConfigurationBean;
+import com.gyorslevel.filter.LangFilter;
 import com.gyorslevel.it.BaseITTest;
+import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.junit.AfterClass;
@@ -20,10 +23,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class AbstractGUITestIT extends BaseITTest {
 
     private static Logger logger = Logger.getLogger(AbstractGUITestIT.class);
-    
     protected static WebDriver driver;
     protected static String baseUrl;
-    
     protected final static StringBuffer verificationErrors = new StringBuffer();
     protected final static String jamesHost = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.JamesHost, String.class);
 
@@ -55,5 +56,12 @@ public class AbstractGUITestIT extends BaseITTest {
 
     protected void openUrl(String pageName) {
         driver.get(baseUrl + "/" + pageName);
+    }
+
+    protected String getLocaleText(String key) {
+        Locale locale = new Locale(LangFilter.DEFAULT_LANG);
+        ResourceBundle captions = ResourceBundle.getBundle("com.gyorslevel.dict", locale);
+        String string = captions.getString(key);
+        return string;
     }
 }
