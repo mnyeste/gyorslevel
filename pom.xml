@@ -21,11 +21,11 @@
 		<jetty.static.path>${project.build.directory}/static</jetty.static.path>
 		<version.major>1</version.major>
 		<version.minor>0</version.minor>
-                <config.gyorslevel.domain>localhost</config.gyorslevel.domain>
-                <config.expiration.timeout>30000</config.expiration.timeout>
-                <config.james.host>localhost</config.james.host>
-                <config.context.folder>${jetty.static.path}</config.context.folder>
-                <config.mode>dev</config.mode>		                
+		<config.gyorslevel.domain>localhost</config.gyorslevel.domain>
+		<config.expiration.timeout>30000</config.expiration.timeout>
+		<config.james.host>localhost</config.james.host>
+		<config.context.folder>${jetty.static.path}</config.context.folder>
+		<config.mode>dev</config.mode>
 	</properties>
 
 
@@ -196,7 +196,7 @@
 				<plugin>
 					<groupId>org.mortbay.jetty</groupId>
 					<artifactId>maven-jetty-plugin</artifactId>
-					<version>6.1.26</version>
+					<version>6.1.25</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -280,6 +280,9 @@
 	<profiles>
 		<profile>
 			<id>integration-test</id>
+			<properties>
+				<log.level>DEBUG</log.level>
+			</properties>
 			<build>
 				<plugins>
 					<plugin>
@@ -324,9 +327,6 @@
 					</plugin>
 				</plugins>
 			</build>
-                        <properties>
-                            <log.level>DEBUG</log.level>
-                        </properties>
 		</profile>
 		<profile>
 			<id>dev-env</id>
@@ -334,7 +334,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<log.level>DEBUG</log.level>	
+				<log.level>DEBUG</log.level>
 			</properties>
 		</profile>
 		<profile>
@@ -371,7 +371,7 @@
 									<Implementation-Version>${version.major}.${version.minor}-${buildNumber}</Implementation-Version>
 								</manifestEntries>
 							</archive>
-                                                        <packagingExcludes>**/*.conf</packagingExcludes>
+							<packagingExcludes>**/*.conf</packagingExcludes>
 						</configuration>
 					</plugin>
 

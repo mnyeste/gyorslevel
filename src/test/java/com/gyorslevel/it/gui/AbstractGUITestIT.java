@@ -1,7 +1,7 @@
 package com.gyorslevel.it.gui;
 
 import com.gyorslevel.configuration.ConfigurationBean;
-import com.gyorslevel.filter.LangFilter;
+import com.gyorslevel.devmode.ModifiedHttpServletRequest;
 import com.gyorslevel.it.BaseITTest;
 import java.util.Locale;
 import java.util.NoSuchElementException;
@@ -59,7 +59,7 @@ public class AbstractGUITestIT extends BaseITTest {
     }
 
     protected String getLocaleText(String key) {
-        Locale locale = new Locale(LangFilter.DEFAULT_LANG);
+        Locale locale = new Locale(ModifiedHttpServletRequest.DEFAULT_LANG);
         ResourceBundle captions = ResourceBundle.getBundle("com.gyorslevel.dict", locale);
         String string = captions.getString(key);
         return string;
