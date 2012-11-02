@@ -2,12 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<fmt:setLocale value="${sessionScope.lang}"/>
-<fmt:setBundle basename="com.gyorslevel.dict" />
+<%@ include file="/WEB-INF/pages/taglib.jsp" %>
 
 <h4><b><fmt:message key="mailpage.message.subject" />&nbsp;</b>${openedMessage.subject}</h4>
 <h4><b><fmt:message key="mailpage.message.sender" />&nbsp;</b>${openedMessage.from}</h4>

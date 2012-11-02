@@ -1,11 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
-<fmt:setLocale value="${sessionScope.lang}"/>
-<fmt:setBundle basename="com.gyorslevel.dict" />
+<%@ include file="/WEB-INF/pages/taglib.jsp" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>

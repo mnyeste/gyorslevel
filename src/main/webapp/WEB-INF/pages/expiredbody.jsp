@@ -2,10 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<fmt:setLocale value="${sessionScope.lang}"/>
-<fmt:setBundle basename="com.gyorslevel.dict" />
+<%@ include file="/WEB-INF/pages/taglib.jsp" %>
 
 <h2 class="pageName"><fmt:message key="expirepage.pageName" /></h2>
 <h3><fmt:message key="expirepage.message.line1" /></h3>
