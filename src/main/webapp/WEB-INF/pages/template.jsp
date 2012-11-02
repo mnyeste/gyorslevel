@@ -45,7 +45,11 @@
                 </div>
                 <div id="header">
                     <div id="logo">
-                        <h1><a href="/index"><img src="../../images/logo_beta.png" /></a></h1>
+                        <h1>
+                            <a href="/index">
+                                <c:out value="<img src='../../images/logo_beta_${sessionScope.lang}.png' />" escapeXml="false" />
+                            </a>
+                        </h1>
                     </div>
                     <div id="banner">
                         <h1><a href="mailto:gyorslevel.info@gmail.com?subject=<fmt:message key="template.ad.contact.subject" />" target="_blank"><fmt:message key="template.ad.contact.line1" /></a></h1>
