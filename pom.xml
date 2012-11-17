@@ -21,7 +21,7 @@
 		<jetty.static.path>${project.build.directory}/static</jetty.static.path>
 		<version.major>1</version.major>
 		<version.minor>0</version.minor>
-                <config.gyorslevel.domains>sublimail.info, localhost</config.gyorslevel.domains>
+                <config.gyorslevel.domains>localhost, sublimail.info</config.gyorslevel.domains>
                 <config.expiration.timeout>30000</config.expiration.timeout>
                 <config.james.host>localhost</config.james.host>
                 <config.context.folder>${jetty.static.path}</config.context.folder>

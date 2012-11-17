@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
 public class LangFilter implements Filter {
     
     private static Logger logger = Logger.getLogger(LangFilter.class);
-    public static final String DEFAULT_LANG = "hu";
+    public static final String DEFAULT_LANG = "en";
     private FilterConfig filterConfig = null;
     
     public void init(FilterConfig filterConfig)
