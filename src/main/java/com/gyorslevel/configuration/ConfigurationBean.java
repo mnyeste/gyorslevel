@@ -18,7 +18,7 @@ public class ConfigurationBean {
 
     public enum ConfigurationBeanKey {
 
-        Domain("gyorslevel.domain", String.class),
+        Domain("gyorslevel.domains", String.class),
         TimeOut("expiration.timeout", Long.class),
         ContextFolder("context.folder", String.class),
         JamesHost("james.host", String.class),
@@ -49,17 +49,20 @@ public class ConfigurationBean {
         }
 
         Configuration config = getConfiguration();
+        final String keyValue = key.getKey();
 
         switch (key) {
             case ContextFolder:
             case JamesHost:
-            case Domain:
             case Mode:
-                return type.cast(config.getString(key.getKey()));
+                return type.cast(config.getString(keyValue));
+            case Domain:
+                String[] stringArray = config.getStringArray(keyValue);
+                return type.cast(stringArray[0]);
             case TimeOut:
-                return type.cast(config.getLong(key.getKey()));
+                return type.cast(config.getLong(keyValue));
             default:
-                throw new MissingConfigurationEntry(key.getKey());
+                throw new MissingConfigurationEntry(keyValue);
         }
 
     }
