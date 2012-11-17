@@ -49,7 +49,7 @@ public class LangFilter implements Filter {
                 String mode = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.Mode, String.class);
                 
                 if (mode.equals("dev")) {
-                    logger.trace("doFilter() - dev mode detected");
+                    logger.debug("doFilter() - dev mode detected");
                     lang = DEFAULT_LANG;
                 } else {
                     Enumeration headerNames = httpRequest.getHeaderNames();
@@ -65,7 +65,7 @@ public class LangFilter implements Filter {
                 
             }
             
-            logger.trace("doFilter() - lang: [" + lang + "]");
+            logger.debug("doFilter() - lang: [" + lang + "]");
             
             chain.doFilter(request, response);
             

@@ -26,15 +26,10 @@ public class LogOutController extends MyAbstractController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String process(ModelMap model, HttpServletRequest request) {
-        
-        HttpSession session = request.getSession();
+    public String process(ModelMap model, HttpSession session) {
         
         invalidateSession(session);
-        addBodyPageNameToModel(model, "indexbody");
-        addVersionToSession(request);
-        
-        return "template";
+        return "redirect:";
 
     }
 
@@ -46,5 +41,6 @@ public class LogOutController extends MyAbstractController {
         }
 
         session.invalidate();
+        
     }
 }

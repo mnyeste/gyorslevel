@@ -4,8 +4,8 @@ import com.gyorslevel.configuration.ConfigurationBean;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import org.apache.james.user.api.UsersRepositoryManagementMBean;
 import org.apache.james.domainlist.api.DomainListManagementMBean;
+import org.apache.james.user.api.UsersRepositoryManagementMBean;
 
 /**
  * TODO: add log4j
