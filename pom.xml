@@ -25,7 +25,7 @@
                 <config.expiration.timeout>30000</config.expiration.timeout>
                 <config.james.host>localhost</config.james.host>
                 <config.context.folder>${jetty.static.path}</config.context.folder>
-                <config.mode>prod</config.mode>		                
+                <config.mode>dev</config.mode>		                
 	</properties>
 
 

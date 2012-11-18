@@ -20,9 +20,9 @@ import org.apache.log4j.Logger;
  *
  * @author dave00
  */
-public class LangFilter implements Filter {
+public class ProfilFilter implements Filter {
     
-    private static Logger logger = Logger.getLogger(LangFilter.class);
+    private static Logger logger = Logger.getLogger(ProfilFilter.class);
     public static final String DEFAULT_LANG = "en";
     private FilterConfig filterConfig = null;
     
