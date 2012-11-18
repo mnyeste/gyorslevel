@@ -15,19 +15,9 @@
         <link rel="stylesheet" type="text/css" href="../../prolificstyle.css" />
         <link rel="stylesheet" type="text/css" href="../../iframe.css" />
         <script src="../../clipboard.js"></script>
-        <script type="text/javascript">
-            
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-35017747-1']);
-            _gaq.push(['_trackPageview']);
-            
-            (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
-            
-        </script>
+
+        <jsp:include page="analytics/${sessionScope.profile.domain}analytics.jsp" />
+        
     </head>
     <body>
 
@@ -36,10 +26,6 @@
                 <div id="menu">
                     <ul>
                         <li class="first"><a href="/index"><fmt:message key="template.menu.mails" />!</a></li>
-                        <!--
-                        <li><a href="/index">About</a></li>
-                        <li class="last"><a href="/index">Contact</a></li>
-                        -->
                     </ul>
                     <br class="clearfix" />
                 </div>
@@ -47,7 +33,7 @@
                     <div id="logo">
                         <h1>
                             <a href="/index">
-                                <c:out value="<img src='../../images/logo_beta_${sessionScope.lang}.png' />" escapeXml="false" />
+                                <c:out value="<img src='../../images/logo_beta_${sessionScope.profile.lang}.png' />" escapeXml="false" />
                             </a>
                         </h1>
                     </div>
@@ -55,9 +41,9 @@
                         <h1><a href="mailto:gyorslevel.info@gmail.com?subject=<fmt:message key="template.ad.contact.subject" />" target="_blank"><fmt:message key="template.ad.contact.line1" /></a></h1>
                         <h3><a href="mailto:gyorslevel.info@gmail.com?subject=<fmt:message key="template.ad.contact.subject" />" target="_blank"><fmt:message key="template.ad.contact.line2" /></a></h3>
                     </div>
-                    <div id="facebook">
-                        <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2Fgyorslevel&amp;send=false&amp;layout=standard&amp;width=300&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=35&amp;appId=198050480711" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:35px;" allowTransparency="true"></iframe>
-                    </div>
+
+                    <jsp:include page="facebook/${sessionScope.profile.domain}fb.jsp" />
+                    
                 </div>
                 <div id="page">
                     <div id="sidebar">
@@ -125,16 +111,9 @@
                             <jsp:include page="${bodyPage}.jsp" />
 
                         </div>
-
-                        <div class="box">
-                            <br />                            
-                            <script src="http://adchange.hu/show.php?g=r:735,f:f,c:d,t:7" type="text/javascript"></script>
-                        </div>
-
-                        <div class="box">
-                            <IFRAME SCROLLING=NO FRAMEBORDER=0 MARGINwidth=0 NORESIZE MARGINheight=0 VSPACE=0 HSPACE=0 width=468 height=60 SRC='http://www.gyakorikerdesek.hu/gykbanner-51ab3ebbe93fc629f6b2c5896016c371-1'></IFRAME>
-                        </div>
                             
+                        <jsp:include page="ads/${sessionScope.profile.domain}ads.jsp" />
+
                         <br class="clearfix" />
 
                     </div>

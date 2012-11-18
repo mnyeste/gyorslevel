@@ -1,6 +1,7 @@
 package com.gyorslevel.filter;
 
 import com.gyorslevel.configuration.ConfigurationBean;
+import com.gyorslevel.profil.Profile;
 import java.io.IOException;
 import java.util.Enumeration;
 import javax.servlet.Filter;
@@ -42,30 +43,40 @@ public class LangFilter implements Filter {
             
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpSession session = httpRequest.getSession();
-            String lang = (String) session.getAttribute("lang");
+            Profile profile = (Profile) session.getAttribute("profil");
             
-            if (lang == null || lang.isEmpty()) {
+            if (profile == null) {
                 
-                String mode = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.Mode, String.class);
+                String lang = null;
                 
-                if (mode.equals("dev")) {
-                    logger.trace("doFilter() - dev mode detected");
-                    lang = DEFAULT_LANG;
-                } else {
-                    Enumeration headerNames = httpRequest.getHeaderNames();
-                    while (headerNames.hasMoreElements()) {
-                        String headerName = (String) headerNames.nextElement();
-                        if (headerName.equals("X-App-Lang")) {                            
-                            lang = httpRequest.getHeader(headerName).toLowerCase();
-                        }
+                Enumeration headerNames = httpRequest.getHeaderNames();
+                while (headerNames.hasMoreElements()) {
+                    String headerName = (String) headerNames.nextElement();
+                    if (headerName.equals("X-App-Lang")) {                            
+                        lang = httpRequest.getHeader(headerName).toLowerCase();
                     }
                 }
                 
-                session.setAttribute("lang", lang);
+                String mode = ConfigurationBean.getValue(ConfigurationBean.ConfigurationBeanKey.Mode, String.class);
+                
+                if (lang == null) {
+                    if (mode.equals("dev")) {
+                        logger.trace("doFilter() - dev mode detected");
+                        lang = DEFAULT_LANG;
+                    } else {
+                        throw new RuntimeException("'lang' cannot be detected");
+                    }
+                }
+                
+                String domain = request.getServerName();
+                
+                profile = new Profile(lang, domain);
+                
+                session.setAttribute("profile", profile);
                 
             }
             
-            logger.trace("doFilter() - lang: [" + lang + "]");
+            logger.trace("doFilter() - profile: [" + profile + "]");
             
             chain.doFilter(request, response);
             
