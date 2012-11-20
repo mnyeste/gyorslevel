@@ -16,7 +16,7 @@
         <link rel="stylesheet" type="text/css" href="../../iframe.css" />
         <script src="../../clipboard.js"></script>
 
-        <jsp:include page="analytics/${sessionScope.profile.domain}analytics.jsp" />
+        <jsp:include page="analytics/${sessionScope.profile.domain}.analytics.jsp" />
         
     </head>
     <body>
@@ -42,7 +42,7 @@
                         <h3><a href="mailto:gyorslevel.info@gmail.com?subject=<fmt:message key="template.ad.contact.subject" />" target="_blank"><fmt:message key="template.ad.contact.line2" /></a></h3>
                     </div>
 
-                    <jsp:include page="facebook/${sessionScope.profile.domain}fb.jsp" />
+                    <jsp:include page="facebook/${sessionScope.profile.domain}.fb.jsp" />
                     
                 </div>
                 <div id="page">
@@ -112,7 +112,7 @@
 
                         </div>
                             
-                        <jsp:include page="ads/${sessionScope.profile.domain}ads.jsp" />
+                        <jsp:include page="ads/${sessionScope.profile.domain}.ads.jsp" />
 
                         <br class="clearfix" />
 
